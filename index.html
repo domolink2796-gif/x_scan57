@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -80,14 +79,14 @@
         details > summary::-webkit-details-marker { display: none; }
     </style>
 </head>
-<body class="overflow-x-hidden antialiased selection:bg-emerald-500 selection:text-slate-900 pt-10">
+<body class="overflow-x-hidden antialiased selection:bg-emerald-500 selection:text-slate-900">
 
-    <div class="fixed top-0 left-0 w-full bg-rose-600 text-white text-center py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest z-[60] shadow-[0_0_15px_rgba(225,29,72,0.5)]">
-        <span class="animate-pulse inline-block">🔥 Внимание: Осталось 7 мест в первой партии! Сборка стартует скоро.</span>
+    <div class="fixed top-0 left-0 w-full bg-rose-600 text-white min-h-[40px] flex items-center justify-center text-[11px] sm:text-xs font-bold uppercase tracking-widest z-[60] shadow-[0_0_15px_rgba(225,29,72,0.5)] px-4">
+        <span class="animate-pulse text-center">🔥 Внимание: Осталось 7 мест в первой партии! Сборка стартует скоро.</span>
     </div>
 
-    <header class="fixed top-10 z-50 w-full border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
-        <div class="mx-auto flex max-w-7xl items-center justify-between p-4 px-6">
+    <header class="fixed top-[40px] z-50 w-full border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
+        <div class="mx-auto flex max-w-7xl 2xl:max-w-screen-2xl items-center justify-between p-4 px-6">
             <div class="flex items-center gap-3">
                 <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 font-bold text-slate-950 shadow-lg shadow-emerald-500/20">X</div>
                 <div>
@@ -107,23 +106,23 @@
         </div>
     </header>
 
-    <section class="relative pt-32 pb-20 md:pt-44 md:pb-24 overflow-hidden">
+    <section class="relative pt-40 pb-20 md:pt-48 md:pb-24 lg:pt-40 2xl:pt-44 2xl:pb-20 overflow-hidden">
         <div class="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:40px_40px]"></div>
         <div class="absolute top-0 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px]"></div>
 
-        <div class="mx-auto max-w-7xl px-6 text-center">
+        <div class="mx-auto max-w-7xl 2xl:max-w-6xl px-6 text-center">
             <div class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-xs font-bold text-emerald-400 backdrop-blur-sm mb-8 uppercase tracking-wider">
                 <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-ping absolute"></span>
                 <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 relative"></span>
                 Полноценный сервер в OBD-разъеме
             </div>
             
-            <h1 class="text-5xl font-black tracking-tight text-white sm:text-7xl max-w-5xl mx-auto leading-[1.1]">
+            <h1 class="text-5xl font-black tracking-tight text-white sm:text-7xl lg:text-6xl 2xl:text-[4.5rem] max-w-5xl mx-auto leading-[1.1]">
                 Хватит кормить автосервисы.<br>
                 <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 bg-clip-text text-transparent">Возьми авто под свой контроль.</span>
             </h1>
             
-            <p class="mt-8 text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            <p class="mt-8 text-lg md:text-xl lg:text-lg 2xl:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
                 Загорелся Check Engine? Не плати 1000 рублей за чтение ошибок. <strong class="text-white font-medium">X_SCANNER57 — это твой личный Wi-Fi автодиагност.</strong> Никаких сторонних приложений и платных подписок. Работает прямо в браузере твоего телефона без интернета. Мгновенная расшифровка и честные советы.
             </p>
 
@@ -131,15 +130,15 @@
                 <div class="glass-panel rounded-2xl p-4 px-8 flex items-center gap-6 shadow-xl animated-border">
                     <div class="text-left">
                         <span class="block text-[11px] uppercase tracking-widest text-emerald-400 font-bold mb-1">Предзаказ V1.0</span>
-                        <span class="text-4xl font-black text-white mono">4 000 ₽</span>
+                        <span class="text-4xl 2xl:text-3xl font-black text-white mono">4 000 ₽</span>
                     </div>
                     <div class="h-10 w-px bg-slate-700"></div>
                     <div class="text-left">
                         <span class="block text-[11px] uppercase tracking-wider text-slate-500 font-bold mb-1 line-through">Розничная цена</span>
-                        <span class="text-xl font-bold text-slate-500 line-through mono">5 000 ₽</span>
+                        <span class="text-xl 2xl:text-lg font-bold text-slate-500 line-through mono">5 000 ₽</span>
                     </div>
                 </div>
-                <a href="#preorder" class="w-full sm:w-auto rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-10 py-5 font-black text-slate-950 text-center hover:from-emerald-400 hover:to-teal-400 transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] transform hover:-translate-y-1 text-lg uppercase tracking-wider">
+                <a href="#preorder" class="w-full sm:w-auto rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-10 py-5 font-black text-slate-950 text-center hover:from-emerald-400 hover:to-teal-400 transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] transform hover:-translate-y-1 text-lg 2xl:text-base uppercase tracking-wider">
                     Хочу в первую партию
                 </a>
             </div>
@@ -152,7 +151,7 @@
             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Максимально глубокая поддержка заводских протоколов</span>
         </div>
         <div class="marquee-container py-4 opacity-70">
-            <div class="marquee-content flex items-center gap-16 text-2xl md:text-3xl font-black text-slate-600 uppercase tracking-widest mono">
+            <div class="marquee-content flex items-center gap-16 text-2xl md:text-3xl lg:text-2xl font-black text-slate-600 uppercase tracking-widest mono">
                 <span>FORD</span> <span>•</span>
                 <span>VAG (VW/SKODA)</span> <span>•</span>
                 <span>TOYOTA</span> <span>•</span>
@@ -167,18 +166,18 @@
         </div>
     </section>
 
-    <section id="why" class="py-24 bg-slate-950 relative">
-        <div class="mx-auto max-w-7xl px-6">
+    <section id="why" class="py-24 lg:py-20 2xl:py-16 bg-slate-950 relative">
+        <div class="mx-auto max-w-7xl 2xl:max-w-6xl px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 class="text-3xl font-black text-white sm:text-4xl mb-6">Почему X_SCANNER57 уничтожает китайские ELM327?</h2>
-                    <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                    <h2 class="text-3xl font-black text-white sm:text-4xl 2xl:text-4xl mb-6">Почему X_SCANNER57 уничтожает китайские ELM327?</h2>
+                    <p class="text-slate-400 text-lg 2xl:text-base leading-relaxed mb-6">
                         Обычный сканер за копейки скидывает тебе код типа "P0420" и оставляет один на один с интернетом. А если связи нет? Ты идешь гуглить, и на форумах диванные эксперты приговаривают двигатель к замене. 
                     </p>
-                    <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                    <p class="text-slate-400 text-lg 2xl:text-base leading-relaxed mb-8">
                         <span class="text-white font-bold">X_SCANNER57 — это устройство, которое само является программой.</span> Ты втыкаешь его в разъем, и он сам опрашивает все блоки (даже подушки и климат). А главное — он выдает <span class="text-emerald-400 font-semibold">расшифровку и совет</span> мгновенно прямо на экран.
                     </p>
-                    <div class="flex flex-col gap-4 text-sm font-bold text-white uppercase tracking-wider">
+                    <div class="flex flex-col gap-4 text-sm 2xl:text-xs font-bold text-white uppercase tracking-wider">
                         <div class="flex items-center gap-3"><span class="flex h-8 w-8 rounded-full bg-emerald-500/20 text-emerald-500 items-center justify-center border border-emerald-500/30">1</span> Не нужно качать и покупать софт.</div>
                         <div class="flex items-center gap-3"><span class="flex h-8 w-8 rounded-full bg-emerald-500/20 text-emerald-500 items-center justify-center border border-emerald-500/30">2</span> База знаний зашита внутри (LittleFS).</div>
                         <div class="flex items-center gap-3"><span class="flex h-8 w-8 rounded-full bg-emerald-500/20 text-emerald-500 items-center justify-center border border-emerald-500/30">3</span> Спасает от развода на деньги на СТО.</div>
@@ -187,15 +186,15 @@
                 <div class="relative">
                     <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 blur-3xl -z-10 rounded-full"></div>
                     <div class="glass-panel p-8 rounded-3xl border border-slate-700/50 relative overflow-hidden">
-                        <h3 class="text-xl font-bold text-white mb-6 mono text-emerald-400">Что он видит в машине?</h3>
+                        <h3 class="text-xl 2xl:text-lg font-bold text-white mb-6 mono text-emerald-400">Что он видит в машине?</h3>
                         <ul class="space-y-5">
                             <li class="flex items-start gap-4">
                                 <div class="bg-rose-500/20 p-3 rounded-xl text-rose-400 border border-rose-500/30">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                 </div>
                                 <div>
-                                    <p class="text-white font-bold text-lg">Основа авто (HS-CAN)</p>
-                                    <p class="text-sm text-slate-400 mt-1">Точная причина Check Engine, проблемы с автоматом (АКПП), ошибки системы ABS.</p>
+                                    <p class="text-white font-bold text-lg 2xl:text-base">Основа авто (HS-CAN)</p>
+                                    <p class="text-sm 2xl:text-xs text-slate-400 mt-1">Точная причина Check Engine, проблемы с автоматом (АКПП), ошибки системы ABS.</p>
                                 </div>
                             </li>
                             <li class="flex items-start gap-4">
@@ -203,8 +202,8 @@
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                                 </div>
                                 <div>
-                                    <p class="text-white font-bold text-lg">Электроника салона (MS-CAN)</p>
-                                    <p class="text-sm text-slate-400 mt-1">То, что слепые ELM не видят: приборная панель, климат-контроль, подушки безопасности, стеклоподъемники.</p>
+                                    <p class="text-white font-bold text-lg 2xl:text-base">Электроника салона (MS-CAN)</p>
+                                    <p class="text-sm 2xl:text-xs text-slate-400 mt-1">То, что слепые ELM не видят: приборная панель, климат-контроль, подушки безопасности, стеклоподъемники.</p>
                                 </div>
                             </li>
                         </ul>
@@ -214,15 +213,15 @@
         </div>
     </section>
 
-    <section id="tech" class="py-24 border-t border-slate-800 bg-[#060a13] relative overflow-hidden">
+    <section id="tech" class="py-24 lg:py-20 2xl:py-16 border-t border-slate-800 bg-[#060a13] relative overflow-hidden">
         <div class="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"></div>
-        <div class="mx-auto max-w-7xl px-6 relative z-10">
+        <div class="mx-auto max-w-7xl 2xl:max-w-6xl px-6 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <div class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mono border border-emerald-500/20 mb-4">
                     Для гиков и профи
                 </div>
-                <h2 class="text-3xl font-black tracking-tight text-white sm:text-5xl">Серьезная инженерия</h2>
-                <p class="mt-6 text-slate-400 text-lg">
+                <h2 class="text-3xl font-black tracking-tight text-white sm:text-5xl lg:text-4xl 2xl:text-4xl">Серьезная инженерия</h2>
+                <p class="mt-6 text-slate-400 text-lg 2xl:text-base">
                     Мы отказались от компромиссов. Внутри корпуса скрывается мощная архитектура коммерческого класса, которая не подведет в самый ответственный момент.
                 </p>
             </div>
@@ -232,42 +231,42 @@
                     <div class="h-12 w-12 bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400 border border-indigo-500/30 mb-6">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
                     </div>
-                    <h4 class="text-xl font-bold text-white mb-2">Процессор ESP32</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed">Мощный чип выступает как локальный веб-сервер. Раздает Wi-Fi, хранит в памяти HTML/JS интерфейс и мгновенно отдает данные по WebSockets.</p>
+                    <h4 class="text-xl 2xl:text-lg font-bold text-white mb-2">Процессор ESP32</h4>
+                    <p class="text-sm 2xl:text-xs text-slate-400 leading-relaxed">Мощный чип выступает как локальный веб-сервер. Раздает Wi-Fi, хранит в памяти HTML/JS интерфейс и мгновенно отдает данные по WebSockets.</p>
                 </div>
                 <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl hover:bg-slate-800/80 transition-colors">
                     <div class="h-12 w-12 bg-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400 border border-emerald-500/30 mb-6">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                     </div>
-                    <h4 class="text-xl font-bold text-white mb-2">Dual-CAN Архитектура</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed">Читаем сразу две шины аппаратно. Отдельный трансивер на мотор, и отдельная связка с цифровым мультиплексором для кузовных блоков.</p>
+                    <h4 class="text-xl 2xl:text-lg font-bold text-white mb-2">Dual-CAN Архитектура</h4>
+                    <p class="text-sm 2xl:text-xs text-slate-400 leading-relaxed">Читаем сразу две шины аппаратно. Отдельный трансивер на мотор, и отдельная связка с цифровым мультиплексором для кузовных блоков.</p>
                 </div>
                 <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl hover:bg-slate-800/80 transition-colors">
                     <div class="h-12 w-12 bg-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 border border-amber-500/30 mb-6">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </div>
-                    <h4 class="text-xl font-bold text-white mb-2">Холодное питание</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed">Автомобильная сеть прыгает до 14.4V. Мы используем импульсный DC-DC преобразователь. Сканер не плавится и не греется при долгой работе.</p>
+                    <h4 class="text-xl 2xl:text-lg font-bold text-white mb-2">Холодное питание</h4>
+                    <p class="text-sm 2xl:text-xs text-slate-400 leading-relaxed">Автомобильная сеть прыгает до 14.4V. Мы используем импульсный DC-DC преобразователь. Сканер не плавится и не греется при долгой работе.</p>
                 </div>
                 <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl hover:bg-slate-800/80 transition-colors">
                     <div class="h-12 w-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 border border-blue-500/30 mb-6">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                     </div>
-                    <h4 class="text-xl font-bold text-white mb-2">OTA Dual-Bank Обновления</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed">Безопасное обновление прошивки по Wi-Fi. Если при скачивании оборвется интернет, прибор загрузится из резервного сектора. Никаких «кирпичей».</p>
+                    <h4 class="text-xl 2xl:text-lg font-bold text-white mb-2">OTA Dual-Bank Обновления</h4>
+                    <p class="text-sm 2xl:text-xs text-slate-400 leading-relaxed">Безопасное обновление прошивки по Wi-Fi. Если при скачивании оборвется интернет, прибор загрузится из резервного сектора. Никаких «кирпичей».</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="simulation" class="py-24 bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800/60 relative">
-        <div class="mx-auto max-w-7xl px-6">
+    <section id="simulation" class="py-24 lg:py-20 2xl:py-16 bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800/60 relative">
+        <div class="mx-auto max-w-7xl 2xl:max-w-6xl px-6">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <div class="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mono border border-blue-500/20 mb-4">
                     Интерфейс внутри
                 </div>
-                <h2 class="text-3xl font-black tracking-tight text-white sm:text-5xl">Попробуй своими руками</h2>
-                <p class="mt-6 text-slate-400 text-lg">
+                <h2 class="text-3xl font-black tracking-tight text-white sm:text-5xl lg:text-4xl 2xl:text-4xl">Попробуй своими руками</h2>
+                <p class="mt-6 text-slate-400 text-lg 2xl:text-base">
                     Кликай по блокам машины слева. Посмотри, как выглядит веб-панель, которая открывается в твоем браузере. Мы переводим с языка "машинного" на язык человеческий.
                 </p>
             </div>
@@ -317,10 +316,10 @@
                         </div>
                     </div>
 
-                    <div id="sim-display-box" class="p-6 md:p-8 min-h-[400px] relative z-10">
+                    <div id="sim-display-box" class="p-6 md:p-8 min-h-[400px] 2xl:min-h-[350px] relative z-10">
                         <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                             <div>
-                                <h4 class="text-lg font-black text-white uppercase tracking-wide">Диагностика: <span class="text-emerald-400">Двигатель и Коробка</span></h4>
+                                <h4 class="text-lg 2xl:text-base font-black text-white uppercase tracking-wide">Диагностика: <span class="text-emerald-400">Двигатель и Коробка</span></h4>
                                 <p class="text-xs text-slate-500 mt-1">Опрос системы произведен мгновенно</p>
                             </div>
                             <div class="flex items-center gap-3">
@@ -332,19 +331,19 @@
                             <div class="bg-[#1e293b]/50 border border-slate-700/50 border-l-4 border-l-rose-500 p-5 rounded-2xl">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center gap-3">
-                                        <span class="text-xl font-black text-white mono tracking-wide bg-slate-800 px-2 py-0.5 rounded">P0301</span>
+                                        <span class="text-xl 2xl:text-lg font-black text-white mono tracking-wide bg-slate-800 px-2 py-0.5 rounded">P0301</span>
                                         <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">Текущая проблема</span>
                                     </div>
                                 </div>
-                                <p class="text-base font-semibold text-slate-200">Двигатель троит: Пропуск зажигания в 1-м цилиндре.</p>
+                                <p class="text-base 2xl:text-sm font-semibold text-slate-200">Двигатель троит: Пропуск зажигания в 1-м цилиндре.</p>
                                 <div class="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
                                         <span class="text-slate-500 font-bold block uppercase text-[10px] mb-2">Обычная расшифровка:</span>
-                                        <p class="text-slate-300 text-sm">Проверьте систему зажигания, свечи, провода.</p>
+                                        <p class="text-slate-300 text-sm 2xl:text-xs">Проверьте систему зажигания, свечи, провода.</p>
                                     </div>
                                     <div class="bg-blue-900/10 p-4 rounded-xl border border-blue-500/30 relative overflow-hidden">
                                         <span class="text-blue-400 font-bold block uppercase text-[10px] mb-2">Совет от X_SCANNER57:</span>
-                                        <p class="text-slate-300 text-sm">Не покупайте запчасти! Сначала поменяйте катушки 1 и 2 местами. Если ошибка перейдет во 2-й цилиндр (P0302) — виновата катушка. Если останется — дело в свече.</p>
+                                        <p class="text-slate-300 text-sm 2xl:text-xs">Не покупайте запчасти! Сначала поменяйте катушки 1 и 2 местами. Если ошибка перейдет во 2-й цилиндр (P0302) — виновата катушка. Если останется — дело в свече.</p>
                                     </div>
                                 </div>
                             </div>
@@ -355,30 +354,30 @@
         </div>
     </section>
 
-    <section id="faq" class="py-24 bg-slate-900 border-t border-slate-800/60">
+    <section id="faq" class="py-24 lg:py-20 2xl:py-16 bg-slate-900 border-t border-slate-800/60">
         <div class="mx-auto max-w-3xl px-6">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-black tracking-tight text-white sm:text-4xl">Остались вопросы?</h2>
-                <p class="mt-4 text-slate-400 text-lg">Всё, что вы хотели знать о проекте.</p>
+                <h2 class="text-3xl font-black tracking-tight text-white sm:text-4xl 2xl:text-4xl">Остались вопросы?</h2>
+                <p class="mt-4 text-slate-400 text-lg 2xl:text-base">Всё, что вы хотели знать о проекте.</p>
             </div>
 
             <div class="space-y-4">
                 <details class="group bg-slate-950 border border-slate-800 rounded-2xl p-6 open:bg-slate-900/50 transition-colors cursor-pointer shadow-lg">
-                    <summary class="text-lg font-bold text-white outline-none flex justify-between items-center">
+                    <summary class="text-lg 2xl:text-base font-bold text-white outline-none flex justify-between items-center">
                         А подойдёт моей машине?
                         <span class="text-emerald-500 group-open:rotate-45 transition-transform text-2xl duration-300">+</span>
                     </summary>
-                    <p class="mt-4 text-slate-400 text-base leading-relaxed border-t border-slate-800 pt-4">
+                    <p class="mt-4 text-slate-400 text-base 2xl:text-sm leading-relaxed border-t border-slate-800 pt-4">
                         Да! Сканер универсальный. Мы заложили максимально глубокие базы для <strong class="text-white">Ford, VAG (VW, Skoda, Audi), Toyota, Hyundai/Kia и Renault/Lada</strong>. Главное отличие — он читает не только двигатель, но и салонную электронику (ABS, подушки, климат) благодаря считыванию сразу двух CAN-шин (HS-CAN и MS-CAN).
                     </p>
                 </details>
 
                 <details class="group bg-slate-950 border border-slate-800 rounded-2xl p-6 open:bg-slate-900/50 transition-colors cursor-pointer shadow-lg">
-                    <summary class="text-lg font-bold text-white outline-none flex justify-between items-center">
+                    <summary class="text-lg 2xl:text-base font-bold text-white outline-none flex justify-between items-center">
                         Как его подключать? Я не программист.
                         <span class="text-emerald-500 group-open:rotate-45 transition-transform text-2xl duration-300">+</span>
                     </summary>
-                    <p class="mt-4 text-slate-400 text-base leading-relaxed border-t border-slate-800 pt-4">
+                    <p class="mt-4 text-slate-400 text-base 2xl:text-sm leading-relaxed border-t border-slate-800 pt-4">
                         Тебе не нужно быть хакером или ставить сложные программы на телефон. <br><br>
                         1. Вставляешь сканер в разъем под рулем.<br>
                         2. Подключаешься с телефона к Wi-Fi сети "X_SCANNER57".<br>
@@ -387,11 +386,11 @@
                 </details>
 
                 <details class="group bg-slate-950 border border-slate-800 rounded-2xl p-6 open:bg-slate-900/50 transition-colors cursor-pointer shadow-lg">
-                    <summary class="text-lg font-bold text-white outline-none flex justify-between items-center">
+                    <summary class="text-lg 2xl:text-base font-bold text-white outline-none flex justify-between items-center">
                         Нужен ли интернет для расшифровки ошибок?
                         <span class="text-emerald-500 group-open:rotate-45 transition-transform text-2xl duration-300">+</span>
                     </summary>
-                    <p class="mt-4 text-slate-400 text-base leading-relaxed border-t border-slate-800 pt-4">
+                    <p class="mt-4 text-slate-400 text-base 2xl:text-sm leading-relaxed border-t border-slate-800 pt-4">
                         Нет! Вся оффлайн-база ошибок с подробными расшифровками зашита во внутренней памяти (LittleFS) самого устройства. Даже если вы сломались в лесу, сканер найдет и опишет проблему за миллисекунды.
                     </p>
                 </details>
@@ -399,14 +398,14 @@
         </div>
     </section>
 
-    <section id="preorder" class="py-24 bg-slate-950 relative overflow-hidden border-t border-slate-800">
+    <section id="preorder" class="py-24 lg:py-20 2xl:py-16 bg-slate-950 relative overflow-hidden border-t border-slate-800">
         <div class="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-emerald-500/5 blur-[100px]"></div>
-        <div class="mx-auto max-w-4xl px-6 relative z-10">
+        <div class="mx-auto max-w-4xl 2xl:max-w-3xl px-6 relative z-10">
             <div class="glass-panel rounded-3xl p-8 md:p-14 relative animated-border shadow-2xl">
                 
                 <div class="text-center max-w-2xl mx-auto mb-8">
-                    <h2 class="text-4xl font-black text-white tracking-tight">Оставь заявку на свой сканер</h2>
-                    <p class="mt-4 text-base text-slate-400 leading-relaxed">
+                    <h2 class="text-4xl 2xl:text-3xl font-black text-white tracking-tight">Оставь заявку на свой сканер</h2>
+                    <p class="mt-4 text-base 2xl:text-sm text-slate-400 leading-relaxed">
                         Первая партия (V1.0) собирается ограниченным тиражом. Заполни форму ниже, чтобы закрепить за собой сканер по сниженной цене для бета-тестеров. 
                         <br><strong class="text-white mt-2 inline-block">Оплата только когда прибор будет собран и проверен.</strong>
                     </p>
@@ -414,7 +413,7 @@
 
                 <div class="bg-slate-900/80 border border-slate-700/50 rounded-2xl p-6 mb-8 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-[40px] rounded-full"></div>
-                    <div class="flex justify-between text-sm font-bold text-slate-300 mb-3 mono uppercase">
+                    <div class="flex justify-between text-sm 2xl:text-xs font-bold text-slate-300 mb-3 mono uppercase">
                         <span>Забронировано: <span class="text-emerald-400">43 шт.</span></span>
                         <span class="text-rose-400 animate-pulse">Осталось: 7 мест</span>
                     </div>
@@ -429,16 +428,16 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mono mb-2">Твое имя</label>
-                            <input type="text" required placeholder="Например, Алексей" class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 text-base text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600">
+                            <input type="text" required placeholder="Например, Алексей" class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 2xl:py-3 text-base 2xl:text-sm text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600">
                         </div>
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mono mb-2">Номер для связи</label>
-                            <input type="tel" required placeholder="+7 (999) 000-00-00" class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 text-base text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600">
+                            <input type="tel" required placeholder="+7 (999) 000-00-00" class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 2xl:py-3 text-base 2xl:text-sm text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600">
                         </div>
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mono mb-2">Какая у тебя марка машины?</label>
-                        <select class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 text-base text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none cursor-pointer">
+                        <select class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 2xl:py-3 text-base 2xl:text-sm text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none cursor-pointer">
                             <option value="ford">Ford (Фокус, Фьюжн, Мондео и др.)</option>
                             <option value="vag">VAG (VW, Skoda, Audi)</option>
                             <option value="toyota">Toyota</option>
@@ -448,7 +447,7 @@
                         </select>
                     </div>
                     
-                    <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 py-5 font-black text-slate-950 hover:from-emerald-400 hover:to-teal-400 transition-all text-center shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer text-base uppercase tracking-widest mt-4">
+                    <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 py-5 2xl:py-4 font-black text-slate-950 hover:from-emerald-400 hover:to-teal-400 transition-all text-center shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer text-base 2xl:text-sm uppercase tracking-widest mt-4">
                         Занять место и забронировать за 4000 ₽
                     </button>
                     <p class="text-center text-xs text-slate-500 mono mt-4"><svg class="w-4 h-4 inline text-emerald-500 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Без спама и предоплат. Это честная бронь.</p>
@@ -504,10 +503,10 @@
             const data = blocksData[blockKey];
             const displayBox = document.getElementById('sim-display-box');
 
-            let html = `<div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"><div><h4 class="text-lg font-black text-white uppercase tracking-wide">Диагностика: <span class="text-emerald-400">${data.title}</span></h4><p class="text-xs text-slate-500 mt-1">${data.desc}</p></div><div class="flex items-center gap-3"><span class="text-xs font-bold text-white bg-slate-800 px-3 py-1.5 rounded-full mono">Моя машина</span><span class="text-xs font-bold text-rose-100 bg-rose-500/80 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(244,63,94,0.3)]">НАЙДЕНО ОШИБОК: ${data.errCount}</span></div></div><div class="space-y-5">`;
+            let html = `<div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"><div><h4 class="text-lg 2xl:text-base font-black text-white uppercase tracking-wide">Диагностика: <span class="text-emerald-400">${data.title}</span></h4><p class="text-xs text-slate-500 mt-1">${data.desc}</p></div><div class="flex items-center gap-3"><span class="text-xs font-bold text-white bg-slate-800 px-3 py-1.5 rounded-full mono">Моя машина</span><span class="text-xs font-bold text-rose-100 bg-rose-500/80 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(244,63,94,0.3)]">НАЙДЕНО ОШИБОК: ${data.errCount}</span></div></div><div class="space-y-5">`;
 
             data.errors.forEach(err => {
-                html += `<div class="bg-[#1e293b]/50 border border-slate-700/50 border-l-4 border-l-rose-500 p-5 rounded-2xl"><div class="flex items-center justify-between mb-3"><div class="flex items-center gap-3"><span class="text-xl font-black text-white mono tracking-wide bg-slate-800 px-2 py-0.5 rounded">${err.code}</span><span class="text-xs text-rose-400 font-bold uppercase tracking-wider">${err.status}</span></div></div><p class="text-base font-semibold text-slate-200">${err.text}</p><div class="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800"><span class="text-slate-500 font-bold block uppercase text-[10px] mb-2">Обычная расшифровка:</span><p class="text-slate-300 text-sm">${err.sol}</p></div><div class="bg-emerald-900/10 p-4 rounded-xl border border-emerald-500/30 relative overflow-hidden"><span class="text-emerald-400 font-bold block uppercase text-[10px] mb-2">Совет от X_SCANNER57 (Важно!):</span><p class="text-slate-300 text-sm">${err.nuance}</p></div></div></div>`;
+                html += `<div class="bg-[#1e293b]/50 border border-slate-700/50 border-l-4 border-l-rose-500 p-5 rounded-2xl"><div class="flex items-center justify-between mb-3"><div class="flex items-center gap-3"><span class="text-xl 2xl:text-lg font-black text-white mono tracking-wide bg-slate-800 px-2 py-0.5 rounded">${err.code}</span><span class="text-xs text-rose-400 font-bold uppercase tracking-wider">${err.status}</span></div></div><p class="text-base 2xl:text-sm font-semibold text-slate-200">${err.text}</p><div class="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800"><span class="text-slate-500 font-bold block uppercase text-[10px] mb-2">Обычная расшифровка:</span><p class="text-slate-300 text-sm 2xl:text-xs">${err.sol}</p></div><div class="bg-emerald-900/10 p-4 rounded-xl border border-emerald-500/30 relative overflow-hidden"><span class="text-emerald-400 font-bold block uppercase text-[10px] mb-2">Совет от X_SCANNER57 (Важно!):</span><p class="text-slate-300 text-sm 2xl:text-xs">${err.nuance}</p></div></div></div>`;
             });
             html += '</div>';
             displayBox.innerHTML = html;
