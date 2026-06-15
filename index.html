@@ -273,7 +273,26 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div class="lg:col-span-4 space-y-3">
-                    <div class="text-[11px] uppercase font-bold tracking-wider text-slate-500 mono px-2 mb-4">Блоки твоего авто</div>
+                    
+                    <div class="text-[11px] uppercase font-bold tracking-wider text-slate-500 mono px-2 mb-4">Спец. функции</div>
+                    
+                    <button onclick="selectSimSpecial('mileage', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-500 mono tracking-widest uppercase">Анализ ЭБУ</span>
+                            <span class="text-sm font-bold text-slate-300 mt-1 block">Анти-Перекуп (Пробег)</span>
+                        </div>
+                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                    </button>
+
+                    <button onclick="selectSimSpecial('limp', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-500 mono tracking-widest uppercase">Экстренный режим</span>
+                            <span class="text-sm font-bold text-slate-300 mt-1 block">Доехать до дома (Limp)</span>
+                        </div>
+                        <span class="h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+                    </button>
+
+                    <div class="text-[11px] uppercase font-bold tracking-wider text-slate-500 mono px-2 mt-8 mb-4">Чтение ошибок</div>
                     
                     <button onclick="selectSimBlock('pcm', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-emerald-500/50 bg-slate-900 flex justify-between items-center transition-all cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.1)]">
                         <div>
@@ -485,20 +504,108 @@
             ic: { title: 'Панель Приборов', desc: 'Салонная сеть', errCount: 1, errColor: 'rose', errors: [ { code: 'U1900', status: 'Сбой связи', text: 'Панель глючит, стрелки падают.', sol: 'Замена дорогостоящего блока управления или приборной панели.', nuance: 'Классика жанра! От кочек трескается припой сзади приборной панели. Ничего менять не надо. Сними приборку (2 болта) и отнеси в любой ремонт телефонов, чтобы тебе пропаяли разъем за 300 рублей.' } ] }
         };
 
-        function selectSimBlock(blockKey, btnElement) {
+        // Логика новых спец. функций
+        function selectSimSpecial(type, btnElement) {
+            // Сброс всех кнопок (удаляем стили от изумрудного, синего и красного)
             document.querySelectorAll('.sim-block-btn').forEach(btn => {
-                btn.classList.remove('border-emerald-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
+                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]');
                 btn.classList.add('border-slate-800', 'bg-slate-950/40');
                 btn.querySelector('span.block.mt-1').classList.replace('text-white', 'text-slate-300');
-                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'animate-pulse');
+                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
+            });
+
+            // Активация нажатой кнопки
+            btnElement.classList.remove('border-slate-800', 'bg-slate-950/40');
+            btnElement.classList.add('bg-slate-900');
+            btnElement.querySelector('span.block.mt-1').classList.replace('text-slate-300', 'text-white');
+            
+            const displayBox = document.getElementById('sim-display-box');
+
+            if (type === 'mileage') {
+                btnElement.classList.add('border-emerald-500/50', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
+                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'animate-pulse');
+                
+                displayBox.innerHTML = `
+                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h4 class="text-lg 2xl:text-base font-black text-white uppercase tracking-wide">Анализ: <span class="text-emerald-400">Сверка пробега</span></h4>
+                            <p class="text-xs text-slate-500 mt-1">Опрос по 2 CAN-шинам завершен</p>
+                        </div>
+                        <span class="text-xs font-bold text-rose-100 bg-rose-600 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(225,29,72,0.5)] animate-pulse">ВНИМАНИЕ!</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl flex justify-between items-center">
+                            <span class="text-slate-400 font-bold text-sm sm:text-base">Приборная панель</span>
+                            <span class="text-xl sm:text-2xl font-black text-white mono">85 412 км</span>
+                        </div>
+                        <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl flex justify-between items-center">
+                            <span class="text-slate-400 font-bold text-sm sm:text-base">Блок двигателя</span>
+                            <span class="text-xl sm:text-2xl font-black text-white mono">85 418 км</span>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-500/50 p-4 rounded-xl flex justify-between items-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-rose-500/10 animate-pulse"></div>
+                            <span class="text-rose-400 font-bold relative z-10 text-sm sm:text-base">Блок ABS</span>
+                            <span class="text-xl sm:text-2xl font-black text-rose-400 mono relative z-10">215 890 км</span>
+                        </div>
+                        <div class="mt-6 p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-xl">
+                            <p class="text-emerald-400 text-sm font-bold uppercase mb-1">Вывод системы:</p>
+                            <p class="text-slate-300 text-sm 2xl:text-xs">Пробег был скручен программным путем на приборной панели. Реальный пробег автомобиля составляет более 215 000 км. Покупка не рекомендуется.</p>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'limp') {
+                btnElement.classList.add('border-blue-500/50', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]');
+                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
+                
+                displayBox.innerHTML = `
+                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h4 class="text-lg 2xl:text-base font-black text-white uppercase tracking-wide">Режим: <span class="text-blue-400">Доехать до дома</span></h4>
+                            <p class="text-xs text-slate-500 mt-1">Фоновый авто-сброс аварии</p>
+                        </div>
+                        <span class="text-xs font-bold text-blue-100 bg-blue-600 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(37,99,235,0.5)] animate-pulse">АКТИВНО</span>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-8 text-center relative overflow-hidden">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-500/10 rounded-full blur-[40px] animate-pulse"></div>
+                        
+                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-500/20 border-2 border-blue-500/50 mb-6 relative z-10">
+                            <svg class="w-10 h-10 text-blue-400 animate-[spin_3s_linear_infinite]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        
+                        <h5 class="text-xl font-bold text-white mb-2 relative z-10">Подавление ошибки: <span class="bg-rose-500 text-white px-2 rounded mono text-lg">P0299</span></h5>
+                        <p class="text-slate-400 text-sm mb-6 relative z-10">Блокируем падение машины в "Аварийный режим" (недодув турбины).</p>
+                        
+                        <div class="bg-[#0f172a] rounded-lg p-3 inline-block border border-slate-700 relative z-10 w-full sm:w-auto">
+                            <span class="text-xs text-slate-500 font-bold mono uppercase">Лог процессора ESP32:</span>
+                            <div class="text-emerald-400 font-mono text-[10px] sm:text-xs mt-2 space-y-1 text-left">
+                                <div>> Ошибка обнаружена. Удаление... [OK]</div>
+                                <div class="opacity-70">> Ожидание 1000мс...</div>
+                                <div class="opacity-40">> Отправка команды очистки 04...</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function selectSimBlock(blockKey, btnElement) {
+            // Улучшенный сброс всех кнопок
+            document.querySelectorAll('.sim-block-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]');
+                btn.classList.add('border-slate-800', 'bg-slate-950/40');
+                btn.querySelector('span.block.mt-1').classList.replace('text-white', 'text-slate-300');
+                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
             });
 
             btnElement.classList.remove('border-slate-800', 'bg-slate-950/40');
             btnElement.classList.add('border-emerald-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
             btnElement.querySelector('span.block.mt-1').classList.replace('text-slate-300', 'text-white');
             
-            const isGreen = btnElement.querySelector('span.rounded-full').classList.contains('bg-emerald-500');
-            btnElement.querySelector('span.rounded-full').classList.add(isGreen ? 'shadow-[0_0_10px_rgba(16,185,129,0.6)]' : 'shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'animate-pulse');
+            // Активируем правильный цвет для точки
+            const dot = btnElement.querySelector('span.rounded-full');
+            if(dot.classList.contains('bg-emerald-500')) dot.classList.add('shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'animate-pulse');
+            else if(dot.classList.contains('bg-blue-500')) dot.classList.add('shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
+            else dot.classList.add('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'animate-pulse');
 
             const data = blocksData[blockKey];
             const displayBox = document.getElementById('sim-display-box');
