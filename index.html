@@ -497,6 +497,32 @@
     </footer>
 
     <script>
+        // Код отслеживания уникальных посетителей в Telegram
+        window.addEventListener('DOMContentLoaded', () => {
+            // Проверяем, заходил ли человек ранее
+            if (!localStorage.getItem('visited_xscanner')) {
+                // Если не заходил - ставим метку
+                localStorage.setItem('visited_xscanner', 'true');
+                
+                const part1 = '8880318600:';
+                const part2 = 'AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
+                const botToken = part1 + part2;
+                const chatId = '6846149935'; 
+                const textMessage = '👀 Новый уникальный посетитель зашел на сайт X_SCANNER57!';
+                
+                // Отправляем тихое сообщение в бота
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        chat_id: chatId, 
+                        text: textMessage,
+                        disable_notification: true // Тихое уведомление, без звука
+                    })
+                }).catch(e => console.log('Tracker error'));
+            }
+        });
+
         // База данных симулятора
         const blocksData = {
             pcm: { title: 'Двигатель и Коробка', desc: 'Опрос системы произведен мгновенно', errCount: 2, errColor: 'rose', errors: [ { code: 'P0301', status: 'Текущая проблема', text: 'Двигатель троит: Пропуск зажигания в 1-м цилиндре.', sol: 'Нарушено воспламенение смеси. Проверьте систему зажигания, свечи, провода.', nuance: 'Не покупайте сразу новые запчасти! Сначала поменяйте катушки 1 и 2 местами. Если ошибка перейдет во 2-й цилиндр (P0302) — виновата катушка (часто пробивает от сырости). Если останется — дело в свече.' }, { code: 'P0420', status: 'Старая ошибка', text: 'Низкая эффективность катализатора.', sol: 'Срочно вырезать катализатор или менять его на новый.', nuance: 'Не спешите ехать в сервис и удалять соты! Часто ошибка выскакивает просто из-за одной заправки плохим бензином. Сбросьте ошибку нашим сканером, залейте 95-й бензин и покатайтесь пару дней.' } ] },
