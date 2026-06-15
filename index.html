@@ -620,7 +620,7 @@
         }
 
         // ==========================================
-        // ОТПРАВКА ЗАЯВОК В ТЕЛЕГРАМ (ID: 6846149935)
+        // ОТПРАВКА ЗАЯВОК В ТЕЛЕГРАМ
         // ==========================================
         async function handleFormSubmit(event) {
             event.preventDefault();
@@ -629,7 +629,7 @@
             
             const textMessage = `🔥 НОВЫЙ ПРЕДЗАКАЗ (X_SCANNER57) 🔥\n\n👤 Имя: ${inputs[0].value}\n📞 Телефон: ${inputs[1].value}\n🚗 Авто: ${inputs[2].options[inputs[2].selectedIndex].text}`;
 
-            const botToken = 'ТВОЙ_ТОКЕН_ОТ_BOTFATHER'; // <--- ЗАМЕНИТЬ НА ТОКЕН (BotFather)
+            const botToken = '8880318600:AAHctbeWywR6BTjYrrIbD521tM9OK43LiAc';
             const chatId = '6846149935'; 
 
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -650,7 +650,7 @@
                     document.getElementById('success-overlay').classList.remove('hidden');
                     form.reset();
                 } else {
-                    alert('Ошибка сервера. Проверьте правильность токена бота.');
+                    alert('Ошибка сервера. Проверьте, нажали ли вы /start в боте.');
                 }
             } catch (error) {
                 alert('Нет подключения к интернету.');
