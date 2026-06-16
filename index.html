@@ -536,28 +536,8 @@
     </footer>
 
     <script>
-        // Код отслеживания уникальных посетителей
+        // Инициализация живого счетчика при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
-            if (!localStorage.getItem('visited_xscanner')) {
-                localStorage.setItem('visited_xscanner', 'true');
-                const part1 = '8880318600:';
-                const part2 = 'AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
-                const botToken = part1 + part2;
-                const chatId = '6846149935'; 
-                const textMessage = '👀 Новый уникальный посетитель зашел на сайт X_SCANNER57!';
-                
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        chat_id: chatId, 
-                        text: textMessage,
-                        disable_notification: true
-                    })
-                }).catch(e => console.log('Tracker error'));
-            }
-            
-            // Инициализация живого счетчика при загрузке страницы
             updateLiveCounterUI();
         });
 
@@ -718,7 +698,6 @@
         // ЛОГИКА ЖИВОГО СЧЕТЧИКА
         // ==========================================
         function updateLiveCounterUI() {
-            // Читаем сколько мест осталось из памяти браузера (по умолчанию 10)
             let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left'));
             if (isNaN(spotsLeft) || spotsLeft <= 0) {
                 spotsLeft = 10;
@@ -729,33 +708,26 @@
             let booked = totalSpots - spotsLeft;
             let percent = (booked / totalSpots) * 100;
 
-            // Обновляем текст на странице
             document.getElementById('booked-count').innerText = booked + ' шт.';
             document.getElementById('left-count').innerText = 'Осталось: ' + spotsLeft + ' ' + (spotsLeft === 1 ? 'место' : (spotsLeft >= 2 && spotsLeft <= 4 ? 'места' : 'мест'));
             document.getElementById('top-banner-count').innerText = '🔥 Внимание: Осталось ' + spotsLeft + ' мест в первой партии! Сборка стартует скоро.';
             
-            // Анимируем полосу прогресса
             setTimeout(() => {
                 document.getElementById('progress-bar-fill').style.width = percent + '%';
             }, 300);
         }
 
         // ==========================================
-        // ОТПРАВКА ЗАЯВОК В ТЕЛЕГРАМ
+        // ОТПРАВКА ЗАЯВОК НА ТВОЙ СЕРВЕР LOGIST_X
         // ==========================================
         async function handleFormSubmit(event) {
             event.preventDefault();
             const form = event.target;
             const inputs = form.querySelectorAll('input, select');
             
-            const textMessage = `🔥 НОВЫЙ ПРЕДЗАКАЗ (X_SCANNER57) 🔥\n\n👤 Имя: ${inputs[0].value}\n📱 Контакт: ${inputs[1].value}\n🚗 Авто: ${inputs[2].options[inputs[2].selectedIndex].text}`;
+            // Ссылка на твой собственный сервер
+            const serverUrl = 'https://logist-x.store/api/xscanner-order';
 
-            const part1 = '8880318600:';
-            const part2 = 'AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
-            const botToken = part1 + part2;
-            const chatId = '6846149935'; 
-
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
             
@@ -763,28 +735,31 @@
             submitBtn.disabled = true;
 
             try {
-                const response = await fetch(url, {
+                // Никаких Телеграм API напрямую, обращаемся к твоему безопасному серверу
+                const response = await fetch(serverUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: chatId, text: textMessage })
+                    body: JSON.stringify({ 
+                        name: inputs[0].value, 
+                        contact: inputs[1].value, 
+                        car: inputs[2].options[inputs[2].selectedIndex].text 
+                    })
                 });
 
-                if (response.ok) {
-                    // Уменьшаем счетчик при успешной заявке
-                    let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left')) || 10;
-                    if (spotsLeft > 1) {
-                        spotsLeft--;
-                        localStorage.setItem('xscanner_spots_left', spotsLeft);
-                        updateLiveCounterUI(); // Обновляем полосу и цифры
-                    }
-
-                    document.getElementById('success-overlay').classList.remove('hidden');
-                    form.reset();
-                } else {
-                    alert('Ошибка сервера. Проверьте, нажали ли вы /start в боте.');
+                if (!response.ok) throw new Error('Server error');
+                
+                // Успешно! Списываем место.
+                let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left')) || 10;
+                if (spotsLeft > 1) {
+                    spotsLeft--;
+                    localStorage.setItem('xscanner_spots_left', spotsLeft);
+                    updateLiveCounterUI(); 
                 }
+
+                document.getElementById('success-overlay').classList.remove('hidden');
+                form.reset();
             } catch (error) {
-                alert('Нет подключения к интернету.');
+                alert('Ошибка сети или сервер недоступен. Пожалуйста, напишите мне напрямую в Telegram.');
             } finally {
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
