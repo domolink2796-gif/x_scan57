@@ -535,9 +535,29 @@
         </div>
     </footer>
 
-    <script>
-        // Инициализация живого счетчика при загрузке страницы
+        <script>
+        // Инициализация живого счетчика и трекер посещений (напрямую в Telegram)
         window.addEventListener('DOMContentLoaded', () => {
+            // Отправка уведомления о новом посетителе
+            if (!localStorage.getItem('visited_xscanner')) {
+                localStorage.setItem('visited_xscanner', 'true');
+                const part1 = '8880318600:';
+                const part2 = 'AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
+                const botToken = part1 + part2;
+                const chatId = '6846149935'; 
+                const textMessage = '👀 Новый уникальный посетитель зашел на сайт X_SCANNER57!';
+                
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        chat_id: chatId, 
+                        text: textMessage,
+                        disable_notification: true
+                    })
+                }).catch(e => console.log('Tracker error'));
+            }
+
             updateLiveCounterUI();
         });
 
@@ -768,5 +788,6 @@
 
         function closeSuccess() { document.getElementById('success-overlay').classList.add('hidden'); }
     </script>
+
 </body>
 </html>
