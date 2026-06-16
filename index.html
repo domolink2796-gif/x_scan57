@@ -82,7 +82,7 @@
 <body class="overflow-x-hidden antialiased selection:bg-emerald-500 selection:text-slate-900 pt-10">
 
     <div class="fixed top-0 left-0 w-full bg-rose-600 text-white text-center py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest z-[60] shadow-[0_0_15px_rgba(225,29,72,0.5)]">
-        <span class="animate-pulse inline-block">🔥 Внимание: Осталось 7 мест в первой партии! Сборка стартует скоро.</span>
+        <span class="animate-pulse inline-block" id="top-banner-count">🔥 Внимание: Осталось 10 мест в первой партии! Сборка стартует скоро.</span>
     </div>
 
     <header class="fixed top-10 z-50 w-full border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
@@ -275,8 +275,24 @@
                 <div class="lg:col-span-4 space-y-3">
                     
                     <div class="text-[11px] uppercase font-bold tracking-wider text-slate-500 mono px-2 mb-4">Спец. функции</div>
+
+                    <button onclick="selectSimSpecial('compression', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Диагностика ДВС</span>
+                            <span class="text-sm font-bold text-slate-300 mt-1 block">Замер компрессии</span>
+                        </div>
+                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                    </button>
+
+                    <button onclick="selectSimSpecial('oil', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Сервис</span>
+                            <span class="text-sm font-bold text-slate-300 mt-1 block">Ресурс масла (IOLM)</span>
+                        </div>
+                        <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+                    </button>
                     
-                    <button onclick="selectSimSpecial('mileage', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
+                    <button onclick="selectSimSpecial('mileage', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer mt-4">
                         <div>
                             <span class="block text-[10px] font-bold text-slate-500 mono tracking-widest uppercase">Анализ ЭБУ</span>
                             <span class="text-sm font-bold text-slate-300 mt-1 block">Анти-Перекуп (Пробег)</span>
@@ -430,14 +446,24 @@
                     </p>
                 </div>
 
+                <div class="mb-8 p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 flex items-start gap-4">
+                    <div class="bg-amber-500/20 p-2 rounded-lg text-amber-400 mt-1">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-amber-400 font-bold text-sm uppercase tracking-wider mb-1">Эксклюзив для первой партии</h4>
+                        <p class="text-slate-300 text-sm">Первые покупатели (версия V1.0) получают <strong class="text-white">пожизненную гарантию</strong> на железо. Если плата выйдет из строя по вине компонентов — замена за мой счет без вопросов.</p>
+                    </div>
+                </div>
+
                 <div class="bg-slate-900/80 border border-slate-700/50 rounded-2xl p-6 mb-8 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-[40px] rounded-full"></div>
                     <div class="flex justify-between text-sm font-bold text-slate-300 mb-3 mono uppercase">
-                        <span>Забронировано: <span class="text-emerald-400">43 шт.</span></span>
-                        <span class="text-rose-400 animate-pulse">Осталось: 7 мест</span>
+                        <span>Забронировано: <span class="text-emerald-400" id="booked-count">40 шт.</span></span>
+                        <span class="text-rose-400 animate-pulse" id="left-count">Осталось: 10 мест</span>
                     </div>
                     <div class="h-3 w-full bg-slate-800 rounded-full overflow-hidden shadow-inner">
-                        <div class="h-full bg-gradient-to-r from-emerald-500 to-rose-500 w-[86%] rounded-full relative">
+                        <div class="h-full bg-gradient-to-r from-emerald-500 to-rose-500 w-[80%] rounded-full relative transition-all duration-1000 ease-in-out" id="progress-bar-fill">
                             <div class="absolute inset-0 bg-white/20 w-full animate-pulse"></div>
                         </div>
                     </div>
@@ -450,8 +476,8 @@
                             <input type="text" required placeholder="Например, Алексей" class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 text-base text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mono mb-2">Номер для связи</label>
-                            <input type="tel" required placeholder="+7 (999) 000-00-00" class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 text-base text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600">
+                            <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mono mb-2">Telegram или Телефон</label>
+                            <input type="text" required placeholder="@username или +7(999)..." class="w-full rounded-xl border border-slate-700 bg-[#0f172a] px-5 py-4 text-base text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600">
                         </div>
                     </div>
                     <div>
@@ -497,30 +523,29 @@
     </footer>
 
     <script>
-        // Код отслеживания уникальных посетителей в Telegram
+        // Код отслеживания уникальных посетителей
         window.addEventListener('DOMContentLoaded', () => {
-            // Проверяем, заходил ли человек ранее
             if (!localStorage.getItem('visited_xscanner')) {
-                // Если не заходил - ставим метку
                 localStorage.setItem('visited_xscanner', 'true');
-                
                 const part1 = '8880318600:';
                 const part2 = 'AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
                 const botToken = part1 + part2;
                 const chatId = '6846149935'; 
                 const textMessage = '👀 Новый уникальный посетитель зашел на сайт X_SCANNER57!';
                 
-                // Отправляем тихое сообщение в бота
                 fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         chat_id: chatId, 
                         text: textMessage,
-                        disable_notification: true // Тихое уведомление, без звука
+                        disable_notification: true
                     })
                 }).catch(e => console.log('Tracker error'));
             }
+            
+            // Инициализация живого счетчика при загрузке страницы
+            updateLiveCounterUI();
         });
 
         // База данных симулятора
@@ -530,17 +555,14 @@
             ic: { title: 'Панель Приборов', desc: 'Салонная сеть', errCount: 1, errColor: 'rose', errors: [ { code: 'U1900', status: 'Сбой связи', text: 'Панель глючит, стрелки падают.', sol: 'Замена дорогостоящего блока управления или приборной панели.', nuance: 'Классика жанра! От кочек трескается припой сзади приборной панели. Ничего менять не надо. Сними приборку (2 болта) и отнеси в любой ремонт телефонов, чтобы тебе пропаяли разъем за 300 рублей.' } ] }
         };
 
-        // Логика новых спец. функций
         function selectSimSpecial(type, btnElement) {
-            // Сброс всех кнопок (удаляем стили от изумрудного, синего и красного)
             document.querySelectorAll('.sim-block-btn').forEach(btn => {
-                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]');
+                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'border-amber-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]', 'shadow-[0_0_20px_rgba(245,158,11,0.1)]');
                 btn.classList.add('border-slate-800', 'bg-slate-950/40');
                 btn.querySelector('span.block.mt-1').classList.replace('text-white', 'text-slate-300');
-                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
+                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'shadow-[0_0_10px_rgba(245,158,11,0.6)]', 'animate-pulse');
             });
 
-            // Активация нажатой кнопки
             btnElement.classList.remove('border-slate-800', 'bg-slate-950/40');
             btnElement.classList.add('bg-slate-900');
             btnElement.querySelector('span.block.mt-1').classList.replace('text-slate-300', 'text-white');
@@ -611,27 +633,61 @@
                         </div>
                     </div>
                 `;
+            } else if (type === 'compression') {
+                btnElement.classList.add('border-emerald-500/50', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
+                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'animate-pulse');
+                displayBox.innerHTML = `
+                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h4 class="text-lg font-black text-white uppercase tracking-wide">Виртуальный механик: <span class="text-emerald-400">Замер компрессии</span></h4>
+                            <p class="text-xs text-slate-500 mt-1">Анализ относительной компрессии по пульсации оборотов коленвала через HS-CAN.</p>
+                        </div>
+                        <span class="text-xs font-bold text-rose-100 bg-rose-600 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(225,29,72,0.5)] animate-pulse">ОТКЛОНЕНИЕ</span>
+                    </div>
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 text-center">
+                        <div class="flex gap-2 items-end h-40 justify-center mb-6">
+                            <div class="w-16 bg-emerald-500/80 border border-emerald-400 h-[95%] rounded-t flex flex-col justify-end pb-2"><span class="text-white font-bold">1</span></div>
+                            <div class="w-16 bg-emerald-500/80 border border-emerald-400 h-[92%] rounded-t flex flex-col justify-end pb-2"><span class="text-white font-bold">2</span></div>
+                            <div class="w-16 bg-rose-500/80 border border-rose-400 h-[40%] rounded-t flex flex-col justify-end pb-2 animate-pulse"><span class="text-white font-bold">3</span></div>
+                            <div class="w-16 bg-emerald-500/80 border border-emerald-400 h-[94%] rounded-t flex flex-col justify-end pb-2"><span class="text-white font-bold">4</span></div>
+                        </div>
+                        <p class="text-rose-400 font-bold mt-4 uppercase tracking-wider text-sm">Внимание: Цилиндр №3 имеет критическое падение компрессии!</p>
+                    </div>`;
+            } else if (type === 'oil') {
+                btnElement.classList.add('border-amber-500/50', 'shadow-[0_0_20px_rgba(245,158,11,0.1)]');
+                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(245,158,11,0.6)]', 'animate-pulse');
+                displayBox.innerHTML = `
+                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h4 class="text-lg font-black text-white uppercase tracking-wide">Сервис: <span class="text-amber-400">Ресурс масла (IOLM)</span></h4>
+                            <p class="text-xs text-slate-500 mt-1">*Доступно для Ford Focus 3+, Kuga 2+, Mondeo 4+ и новее.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 text-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-amber-500/5"></div>
+                        <div class="text-7xl font-black text-white mb-2 relative z-10 mono">12%</div>
+                        <p class="text-slate-400 relative z-10 uppercase tracking-widest text-xs font-bold mb-6">Остаток ресурса масла</p>
+                        <div class="inline-block bg-amber-500/10 border border-amber-500/30 px-6 py-4 rounded-xl relative z-10">
+                            <p class="text-amber-400 font-bold text-sm">Рекомендация: Замена через 1200 км. Масло сильно деградировало из-за работы в пробках.</p>
+                        </div>
+                    </div>`;
             }
         }
 
         function selectSimBlock(blockKey, btnElement) {
-            // Улучшенный сброс всех кнопок
             document.querySelectorAll('.sim-block-btn').forEach(btn => {
-                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]');
+                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'border-amber-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]', 'shadow-[0_0_20px_rgba(245,158,11,0.1)]');
                 btn.classList.add('border-slate-800', 'bg-slate-950/40');
                 btn.querySelector('span.block.mt-1').classList.replace('text-white', 'text-slate-300');
-                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
+                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'shadow-[0_0_10px_rgba(245,158,11,0.6)]', 'animate-pulse');
             });
 
             btnElement.classList.remove('border-slate-800', 'bg-slate-950/40');
             btnElement.classList.add('border-emerald-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
             btnElement.querySelector('span.block.mt-1').classList.replace('text-slate-300', 'text-white');
             
-            // Активируем правильный цвет для точки
             const dot = btnElement.querySelector('span.rounded-full');
-            if(dot.classList.contains('bg-emerald-500')) dot.classList.add('shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'animate-pulse');
-            else if(dot.classList.contains('bg-blue-500')) dot.classList.add('shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
-            else dot.classList.add('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'animate-pulse');
+            dot.classList.add('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'animate-pulse');
 
             const data = blocksData[blockKey];
             const displayBox = document.getElementById('sim-display-box');
@@ -646,6 +702,32 @@
         }
 
         // ==========================================
+        // ЛОГИКА ЖИВОГО СЧЕТЧИКА
+        // ==========================================
+        function updateLiveCounterUI() {
+            // Читаем сколько мест осталось из памяти браузера (по умолчанию 10)
+            let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left'));
+            if (isNaN(spotsLeft) || spotsLeft <= 0) {
+                spotsLeft = 10;
+                localStorage.setItem('xscanner_spots_left', spotsLeft);
+            }
+            
+            let totalSpots = 50;
+            let booked = totalSpots - spotsLeft;
+            let percent = (booked / totalSpots) * 100;
+
+            // Обновляем текст на странице
+            document.getElementById('booked-count').innerText = booked + ' шт.';
+            document.getElementById('left-count').innerText = 'Осталось: ' + spotsLeft + ' ' + (spotsLeft === 1 ? 'место' : (spotsLeft >= 2 && spotsLeft <= 4 ? 'места' : 'мест'));
+            document.getElementById('top-banner-count').innerText = '🔥 Внимание: Осталось ' + spotsLeft + ' мест в первой партии! Сборка стартует скоро.';
+            
+            // Анимируем полосу прогресса
+            setTimeout(() => {
+                document.getElementById('progress-bar-fill').style.width = percent + '%';
+            }, 300);
+        }
+
+        // ==========================================
         // ОТПРАВКА ЗАЯВОК В ТЕЛЕГРАМ
         // ==========================================
         async function handleFormSubmit(event) {
@@ -653,13 +735,11 @@
             const form = event.target;
             const inputs = form.querySelectorAll('input, select');
             
-            const textMessage = `🔥 НОВЫЙ ПРЕДЗАКАЗ (X_SCANNER57) 🔥\n\n👤 Имя: ${inputs[0].value}\n📞 Телефон: ${inputs[1].value}\n🚗 Авто: ${inputs[2].options[inputs[2].selectedIndex].text}`;
+            const textMessage = `🔥 НОВЫЙ ПРЕДЗАКАЗ (X_SCANNER57) 🔥\n\n👤 Имя: ${inputs[0].value}\n📱 Контакт: ${inputs[1].value}\n🚗 Авто: ${inputs[2].options[inputs[2].selectedIndex].text}`;
 
-            // Разрезаем токен на две части, чтобы сканеры GitHub не заблокировали его
             const part1 = '8880318600:';
             const part2 = 'AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
             const botToken = part1 + part2;
-            
             const chatId = '6846149935'; 
 
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -677,6 +757,14 @@
                 });
 
                 if (response.ok) {
+                    // Уменьшаем счетчик при успешной заявке
+                    let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left')) || 10;
+                    if (spotsLeft > 1) {
+                        spotsLeft--;
+                        localStorage.setItem('xscanner_spots_left', spotsLeft);
+                        updateLiveCounterUI(); // Обновляем полосу и цифры
+                    }
+
                     document.getElementById('success-overlay').classList.remove('hidden');
                     form.reset();
                 } else {
