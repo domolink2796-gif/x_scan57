@@ -11,12 +11,6 @@
     <meta property="og:description" content="Полноценный сервер в OBD-разъеме. Фоновый сброс аварий (Limp Mode), проверка реального пробега и честная диагностика. Без интернета и подписок.">
     <meta property="og:image" content="https://domolink2796-gif.github.io/x_scan57/preview.png">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://domolink2796-gif.github.io/x_scan57/">
-    <meta name="twitter:title" content="X_SCANNER57 — Твой Личный Автодиагност">
-    <meta name="twitter:description" content="Полноценный сервер в OBD-разъеме. Фоновый сброс аварий (Limp Mode), проверка реального пробега и честная диагностика. Без интернета и подписок.">
-    <meta name="twitter:image" content="https://domolink2796-gif.github.io/x_scan57/preview.png">
-
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
@@ -87,15 +81,106 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* FAQ */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
+
+        /* ========================================= */
+        /* ИЗОЛИРОВАННЫЕ СТИЛИ СИМУЛЯТОРА СКАНЕРА    */
+        /* ========================================= */
+        #scanner-simulator {
+            --sc-bg: #060a13; --sc-panel: #111827; --sc-panel-border: #1e293b;
+            --sc-emerald: #10b981; --sc-rose: #f43f5e; --sc-blue: #3b82f6; --sc-amber: #f59e0b;
+            --sc-text-main: #f3f4f6; --sc-text-muted: #94a3b8;
+            background-color: var(--sc-bg); color: var(--sc-text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            text-align: left;
+            user-select: none; -webkit-tap-highlight-color: transparent;
+            height: 100%; overflow-y: auto; overflow-x: hidden;
+        }
+        
+        #scanner-simulator * { box-sizing: border-box; margin: 0; padding: 0; }
+        #scanner-simulator::-webkit-scrollbar { width: 4px; }
+        #scanner-simulator::-webkit-scrollbar-track { background: transparent; }
+        #scanner-simulator::-webkit-scrollbar-thumb { background: var(--sc-panel-border); border-radius: 4px; }
+
+        .sc-header { background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--sc-panel-border); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .sc-logo { font-weight: 900; font-size: 1.1rem; letter-spacing: 1px; }
+        .sc-logo-accent { color: var(--sc-emerald); }
+        .sc-status-badge { font-size: 0.65rem; font-weight: bold; color: var(--sc-text-muted); border: 1px solid var(--sc-panel-border); background: rgba(255, 255, 255, 0.05); padding: 5px 10px; border-radius: 6px; display: flex; align-items: center; gap: 6px; }
+        .sc-status-dot { width: 6px; height: 6px; background: var(--sc-text-muted); border-radius: 50%; }
+        .sc-status-dot.active { animation: sc-pulse 2s infinite; }
+
+        .sc-container { padding: 20px; padding-bottom: 40px; }
+        .sc-screen { display: none; }
+        .sc-screen.active { display: block; animation: sc-fadeIn 0.3s ease-out; }
+
+        .sc-nav-back { display: inline-flex; align-items: center; gap: 8px; color: var(--sc-text-muted); font-size: 0.9rem; font-weight: bold; padding: 5px 0 20px 0; cursor: pointer; }
+        .sc-nav-back svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .sc-center-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 65vh; text-align: center; }
+        .sc-radar { width: 60px; height: 60px; border: 2px solid var(--sc-panel-border); border-radius: 50%; position: relative; margin-bottom: 20px; overflow: hidden; }
+        .sc-radar::before { content: ''; position: absolute; top: 50%; left: 50%; width: 50%; height: 50%; background: linear-gradient(45deg, transparent, var(--sc-emerald)); transform-origin: 0% 0%; animation: sc-scan 1.5s linear infinite; }
+        .sc-obd-icon { width: 80px; height: 80px; fill: var(--sc-text-muted); margin-bottom: 20px; opacity: 0.5; }
+
+        .sc-car-profile { background: var(--sc-panel); border: 1px solid var(--sc-emerald); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(16, 185, 129, 0.1); }
+        .sc-car-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; border-bottom: 1px solid var(--sc-panel-border); padding-bottom: 15px; }
+        .sc-car-title { font-size: 1.3rem; font-weight: 900; margin: 0; }
+        .sc-car-year { font-size: 0.8rem; color: var(--sc-emerald); font-weight: bold; background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 6px; }
+        .sc-vin-box { background: #000; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 1rem; color: var(--sc-text-muted); letter-spacing: 2px; text-align: center; margin-bottom: 15px; border: 1px dashed var(--sc-panel-border); }
+        
+        .sc-modules-title { font-size: 0.75rem; color: var(--sc-text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: bold; }
+        .sc-modules-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sc-module-tag { background: rgba(59, 130, 246, 0.1); border: 1px solid var(--sc-panel-border); color: var(--sc-text-main); font-size: 0.75rem; font-weight: bold; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 5px; cursor: pointer; transition: 0.2s; justify-content: center; }
+        .sc-module-tag:active { transform: scale(0.95); }
+        
+        .sc-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .sc-card { background: var(--sc-panel); border: 1px solid var(--sc-panel-border); border-radius: 16px; padding: 20px 15px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .sc-card:active { transform: scale(0.95); border-color: var(--sc-emerald); }
+        .sc-card.full-width { grid-column: span 2; display: flex; align-items: center; justify-content: space-between; padding: 20px; text-align: left; }
+        .sc-card-icon { width: 36px; height: 36px; margin-bottom: 10px; display: inline-block; }
+        .sc-card-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 6px; }
+        .sc-card-desc { font-size: 0.65rem; color: var(--sc-text-muted); }
+        .sc-icon-emerald { fill: var(--sc-emerald); } .sc-icon-rose { fill: var(--sc-rose); } .sc-icon-amber { fill: var(--sc-amber); } .sc-icon-blue { fill: var(--sc-blue); }
+
+        .sc-data-list { display: flex; flex-direction: column; gap: 10px; }
+        .sc-data-row { background: #000; border: 1px solid var(--sc-panel-border); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .sc-data-label { color: var(--sc-text-muted); font-size: 0.85rem; font-weight: bold; }
+        .sc-data-value { color: #fff; font-size: 1.1rem; font-weight: 900; font-family: monospace; }
+        .sc-data-value.alert { color: var(--sc-rose); }
+
+        .sc-btn-action { background: var(--sc-emerald); color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: 900; font-size: 1rem; text-transform: uppercase; margin-top: 20px; cursor: pointer; transition: background 0.2s; }
+        .sc-btn-action:active { background: #0ea5e9; }
+        
+        #sc-perecup-results { display: none; margin-top: 20px; }
+        .sc-verdict-box { margin-top: 15px; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; text-align: center; }
+
+        .sc-err-card { background: rgba(30, 41, 59, 0.5); border: 1px solid var(--sc-panel-border); border-left: 4px solid var(--sc-rose); padding: 15px; border-radius: 12px; margin-bottom: 15px; }
+        .sc-err-head { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; }
+        .sc-err-code { background: #000; padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 1.1rem; font-weight: 900; color: #fff;}
+        .sc-err-status { font-size: 0.7rem; color: var(--sc-rose); font-weight: bold; text-transform: uppercase; }
+        .sc-err-text { font-size: 0.9rem; margin-bottom: 15px; font-weight: bold; color: #fff;}
+        .sc-err-advices { display: grid; grid-template-columns: 1fr; gap: 10px; border-top: 1px solid var(--sc-panel-border); padding-top: 15px; }
+        .sc-adv-box { padding: 10px; border-radius: 8px; font-size: 0.8rem; }
+        .sc-adv-std { background: rgba(0,0,0,0.5); border: 1px solid var(--sc-panel-border); color: var(--sc-text-muted); }
+        .sc-adv-x { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--sc-emerald); color: var(--sc-text-main); }
+        .sc-adv-title { font-size: 0.65rem; text-transform: uppercase; font-weight: bold; margin-bottom: 5px; display: block; }
+        .sc-adv-title.x { color: var(--sc-emerald); }
+
+        .sc-bar-container { display: flex; gap: 8px; align-items: flex-end; height: 120px; justify-content: center; margin: 20px 0; }
+        .sc-bar { width: 40px; background: rgba(16, 185, 129, 0.8); border: 1px solid var(--sc-emerald); border-radius: 4px 4px 0 0; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 5px; text-align: center; color: #fff; font-weight: bold; }
+        .sc-bar.low { background: rgba(244, 63, 94, 0.8); border-color: var(--sc-rose); animation: sc-pulse 1.5s infinite; }
+        .sc-oil-circle { width: 150px; height: 150px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); border: 4px solid var(--sc-amber); display: flex; align-items: center; justify-content: center; margin: 20px auto; font-size: 3rem; font-weight: 900; font-family: monospace; color: #fff; box-shadow: 0 0 30px rgba(245, 158, 11, 0.2); }
+
+        @keyframes sc-scan { 100% { transform: rotate(360deg); } }
+        @keyframes sc-pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes sc-fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes sc-spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="overflow-x-hidden antialiased selection:bg-emerald-500 selection:text-slate-900 pt-10">
 
-    <div class="fixed top-0 left-0 w-full bg-rose-600 text-white text-center py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest z-[60] shadow-[0_0_15px_rgba(225,29,72,0.5)]">
-        <span class="animate-pulse inline-block" id="top-banner-count">🔥 Внимание: Осталось 10 мест в первой партии! Сборка стартует скоро.</span>
+    <div class="fixed top-0 left-0 w-full bg-emerald-600 text-white text-center py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest z-[60] shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-colors duration-500" id="top-banner-bg">
+        <span class="animate-pulse inline-block" id="top-banner-count">🔥 Внимание: Осталось 5 мест в первой партии! Сборка стартует скоро.</span>
     </div>
 
     <header class="fixed top-10 z-50 w-full border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
@@ -280,168 +365,234 @@
                 </div>
                 <h2 class="text-3xl font-black tracking-tight text-white sm:text-5xl">Попробуй своими руками</h2>
                 <p class="mt-6 text-slate-400 text-lg">
-                    Кликай по блокам машины слева. Посмотри, как выглядит веб-панель, которая открывается в твоем браузере. Мы переводим с языка "машинного" на язык человеческий.
+                    Именно так выглядит веб-панель в браузере твоего телефона. Прокликай блоки, чтобы прочитать ошибки с расшифровкой, или зайди в Спец. Функции.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <div class="lg:col-span-4 space-y-3">
+            <div class="flex justify-center w-full">
+                <div class="relative w-full max-w-[380px] h-[750px] bg-[#060a13] rounded-[40px] border-[10px] border-slate-900 shadow-2xl shadow-emerald-500/20 ring-1 ring-white/10 overflow-hidden">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-xl z-[150]"></div>
                     
-                    <div class="text-[11px] uppercase font-bold tracking-wider text-slate-500 mono px-2 mb-4">Спец. функции</div>
-
-                    <button onclick="selectSimSpecial('compression', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
-                        <div>
-                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Диагностика ДВС</span>
-                            <span class="text-sm font-bold text-slate-300 mt-1 block">Замер компрессии</span>
-                        </div>
-                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                    </button>
-
-                    <button onclick="selectSimSpecial('oil', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
-                        <div>
-                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Сервис</span>
-                            <span class="text-sm font-bold text-slate-300 mt-1 block">Ресурс масла (IOLM)</span>
-                        </div>
-                        <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
-                    </button>
-                    
-                    <button onclick="selectSimSpecial('mileage', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer mt-4">
-                        <div>
-                            <span class="block text-[10px] font-bold text-slate-500 mono tracking-widest uppercase">Анализ ЭБУ</span>
-                            <span class="text-sm font-bold text-slate-300 mt-1 block">Анти-Перекуп (Пробег)</span>
-                        </div>
-                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                    </button>
-
-                    <button onclick="selectSimSpecial('limp', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
-                        <div>
-                            <span class="block text-[10px] font-bold text-slate-500 mono tracking-widest uppercase">Экстренный режим</span>
-                            <span class="text-sm font-bold text-slate-300 mt-1 block">Доехать до дома (Limp)</span>
-                        </div>
-                        <span class="h-2.5 w-2.5 rounded-full bg-blue-500"></span>
-                    </button>
-
-                    <div class="text-[11px] uppercase font-bold tracking-wider text-slate-500 mono px-2 mt-8 mb-4">Чтение ошибок</div>
-                    
-                    <button onclick="selectSimBlock('pcm', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-emerald-500/50 bg-slate-900 flex justify-between items-center transition-all cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.1)]">
-                        <div>
-                            <span class="block text-[10px] font-bold text-emerald-400 mono tracking-widest">Основная шина (HS-CAN)</span>
-                            <span class="text-sm font-bold text-white mt-1 block">Двигатель и Коробка</span>
-                        </div>
-                        <span class="h-2.5 w-2.5 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.6)] animate-pulse"></span>
-                    </button>
-
-                    <button onclick="selectSimBlock('abs', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
-                        <div>
-                            <span class="block text-[10px] font-bold text-slate-500 mono tracking-widest">Основная шина (HS-CAN)</span>
-                            <span class="text-sm font-bold text-slate-300 mt-1 block">Блок Тормозов (ABS)</span>
-                        </div>
-                        <span class="h-2.5 w-2.5 rounded-full bg-rose-500"></span>
-                    </button>
-
-                    <button onclick="selectSimBlock('ic', this)" class="sim-block-btn w-full text-left p-5 rounded-2xl border border-slate-800 bg-slate-950/40 flex justify-between items-center hover:border-slate-600 transition-all cursor-pointer">
-                        <div>
-                            <span class="block text-[10px] font-bold text-slate-500 mono tracking-widest">Салонная шина (MS-CAN)</span>
-                            <span class="text-sm font-bold text-slate-300 mt-1 block">Панель Приборов</span>
-                        </div>
-                        <span class="h-2.5 w-2.5 rounded-full bg-rose-500"></span>
-                    </button>
-                </div>
-
-                <div class="lg:col-span-8 border border-slate-700/80 bg-[#0a0f1c] rounded-3xl overflow-hidden shadow-2xl relative">
-                    <div class="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none"></div>
-                    <div class="bg-[#111827] px-5 py-3 flex items-center justify-between border-b border-slate-800">
-                        <div class="flex items-center gap-2">
-                            <span class="h-3 w-3 rounded-full bg-slate-700"></span>
-                            <span class="h-3 w-3 rounded-full bg-slate-700"></span>
-                            <span class="h-3 w-3 rounded-full bg-slate-700"></span>
-                        </div>
-                        <div class="bg-[#1f2937] border border-slate-700 rounded-md px-4 py-1.5 text-[11px] text-slate-300 mono w-64 text-center truncate">
-                            192.168.4.1/diagnostics
-                        </div>
-                        <div class="flex items-center gap-2 text-[10px] text-emerald-400 font-bold mono border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 rounded">
-                            <span class="h-1.5 w-1.5 bg-emerald-400 rounded-full animate-pulse"></span> ПОДКЛЮЧЕНО
-                        </div>
-                    </div>
-
-                    <div id="sim-display-box" class="p-6 md:p-8 min-h-[400px] relative z-10">
-                        <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                            <div>
-                                <h4 class="text-lg font-black text-white uppercase tracking-wide">Диагностика: <span class="text-emerald-400">Двигатель и Коробка</span></h4>
-                                <p class="text-xs text-slate-500 mt-1">Опрос системы произведен мгновенно</p>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-xs font-bold text-rose-100 bg-rose-500/80 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(244,63,94,0.3)]">НАЙДЕНО ОШИБОК: 2</span>
+                    <div id="scanner-simulator">
+                        <div class="sc-header">
+                            <div class="sc-logo">X_SCANNER<span class="sc-logo-accent">57</span></div>
+                            <div class="sc-status-badge" id="sc-conn-status">
+                                <div class="sc-status-dot" id="sc-conn-dot"></div> <span id="sc-conn-text">ОЖИДАНИЕ</span>
                             </div>
                         </div>
 
-                        <div class="space-y-5">
-                            <div class="bg-[#1e293b]/50 border border-slate-700/50 border-l-4 border-l-rose-500 p-5 rounded-2xl">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-xl font-black text-white mono tracking-wide bg-slate-800 px-2 py-0.5 rounded">P0301</span>
-                                        <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">Текущая проблема</span>
+                        <div id="sc-screen-start" class="sc-container sc-screen active">
+                            <div class="sc-center-screen">
+                                <svg class="sc-obd-icon" viewBox="0 0 24 24"><path d="M19 4H5C3.89 4 3 4.9 3 6v12c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V6C21 4.9 20.11 4 19 4zM6 14H5v-2h1v2zm0-4H5V8h1v2zm3 4H8v-2h1v2zm0-4H8V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2z"/></svg>
+                                <h2 style="margin: 0 0 10px 0;">Устройство готово</h2>
+                                <p style="color: var(--sc-text-muted); font-size: 0.9rem; line-height: 1.5; margin: 0 0 30px 0;">Вставьте сканер в разъем OBD-II и включите зажигание перед подключением.</p>
+                                <button class="sc-btn-action" onclick="sc_startScan()">ПОДКЛЮЧИТЬ</button>
+                            </div>
+                        </div>
+
+                        <div id="sc-screen-loader" class="sc-container sc-screen">
+                            <div class="sc-center-screen">
+                                <div class="sc-radar"></div>
+                                <h3 style="margin: 0 0 5px 0;">Опрос системы...</h3>
+                                <p style="color: var(--sc-text-muted); font-size: 0.8rem; margin: 0;">Получение VIN и пинг ЭБУ по CAN-шинам.</p>
+                            </div>
+                        </div>
+
+                        <div id="sc-screen-home" class="sc-container sc-screen">
+                            <div class="sc-car-profile">
+                                <div class="sc-car-header">
+                                    <div>
+                                        <h2 class="sc-car-title">Ford Fusion</h2>
+                                        <span style="font-size: 0.75rem; color: var(--sc-text-muted);">Определено по VIN</span>
                                     </div>
+                                    <div class="sc-car-year">2008 г.в.</div>
                                 </div>
-                                <p class="text-base font-semibold text-slate-200">Двигатель троит: Пропуск зажигания в 1-м цилиндре.</p>
-                                <div class="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
-                                        <span class="text-slate-500 font-bold block uppercase text-[10px] mb-2">Обычная расшифровка:</span>
-                                        <p class="text-slate-300 text-sm">Проверьте систему зажигания, свечи, провода.</p>
+                                <div class="sc-vin-box">WF0UXXGAJU8Y*****</div>
+
+                                <div class="sc-modules-title">Ответившие блоки (Нажми для инфо)</div>
+                                <div class="sc-modules-grid">
+                                    <div class="sc-module-tag" style="border-color: var(--sc-blue); color: var(--sc-blue);" onclick="sc_openModule('PCM (Двигатель)', '7E0', '8V21-12A650-AA', '2')">PCM</div>
+                                    <div class="sc-module-tag" style="border-color: var(--sc-blue); color: var(--sc-blue);" onclick="sc_openModule('TCM (АКПП)', '7E1', '8V21-7Z369-BB', '0')">TCM</div>
+                                    <div class="sc-module-tag" style="border-color: var(--sc-blue); color: var(--sc-blue);" onclick="sc_openModule('ABS (Тормоза)', '760', '8V51-2C405-AA', '1')">ABS</div>
+                                    <div class="sc-module-tag" style="border-color: var(--sc-emerald); color: var(--sc-emerald);" onclick="sc_openModule('IPC (Приборка)', '720', '8V2T-10849-EE', '1')">IPC</div>
+                                </div>
+                            </div>
+
+                            <div class="sc-menu-grid">
+                                <div class="sc-card full-width" onclick="sc_navigate('special')">
+                                    <div>
+                                        <div class="sc-card-title" style="font-size: 1rem;">Спец. функции</div>
+                                        <div class="sc-card-desc">Компрессия, Масло, Limp Mode</div>
                                     </div>
-                                    <div class="bg-blue-900/10 p-4 rounded-xl border border-blue-500/30 relative overflow-hidden">
-                                        <span class="text-blue-400 font-bold block uppercase text-[10px] mb-2">Совет от X_SCANNER57:</span>
-                                        <p class="text-slate-300 text-sm">Не покупайте запчасти! Сначала поменяйте катушки 1 и 2 местами. Если ошибка перейдет во 2-й цилиндр (P0302) — виновата катушка. Если останется — дело в свече.</p>
-                                    </div>
+                                    <svg class="sc-card-icon sc-icon-blue" style="margin: 0;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .43-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.49-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                                </div>
+                                <div class="sc-card" onclick="sc_navigate('live')">
+                                    <svg class="sc-card-icon sc-icon-amber" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                                    <div class="sc-card-title">Параметры</div>
+                                    <div class="sc-card-desc">Данные в реальном времени</div>
+                                </div>
+                                <div class="sc-card" onclick="sc_navigate('perecup')">
+                                    <svg class="sc-card-icon sc-icon-emerald" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                                    <div class="sc-card-title">Анти-Перекуп</div>
+                                    <div class="sc-card-desc">Сверка пробега по блокам</div>
                                 </div>
                             </div>
                         </div>
+
+                        <div id="sc-screen-special" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('home')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад
+                            </div>
+                            <h2 style="margin-top: 0; margin-bottom: 20px;">Спец. функции</h2>
+                            <p style="color: var(--sc-text-muted); font-size: 0.8rem; margin-bottom: 20px;">Продвинутые алгоритмы анализа через ESP32</p>
+                            
+                            <div class="sc-data-list">
+                                <div class="sc-data-row" style="cursor:pointer;" onclick="sc_navigate('compression')">
+                                    <div>
+                                        <div style="color: var(--sc-emerald); font-weight: bold; font-size: 1rem; margin-bottom: 3px;">Замер компрессии</div>
+                                        <div style="font-size: 0.7rem; color: var(--sc-text-muted);">Без выкручивания свечей (по пульсации)</div>
+                                    </div>
+                                    <svg style="fill: var(--sc-text-muted); width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                                </div>
+                                <div class="sc-data-row" style="cursor:pointer;" onclick="sc_navigate('oil')">
+                                    <div>
+                                        <div style="color: var(--sc-amber); font-weight: bold; font-size: 1rem; margin-bottom: 3px;">Ресурс масла (IOLM)</div>
+                                        <div style="font-size: 0.7rem; color: var(--sc-text-muted);">Деградация масла по моточасам</div>
+                                    </div>
+                                    <svg style="fill: var(--sc-text-muted); width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                                </div>
+                                <div class="sc-data-row" style="cursor:pointer;" onclick="sc_navigate('limp')">
+                                    <div>
+                                        <div style="color: var(--sc-blue); font-weight: bold; font-size: 1rem; margin-bottom: 3px;">Доехать до дома (Limp)</div>
+                                        <div style="font-size: 0.7rem; color: var(--sc-text-muted);">Фоновый сброс аварийного режима</div>
+                                    </div>
+                                    <svg style="fill: var(--sc-text-muted); width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sc-screen-module" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('home')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад
+                            </div>
+                            <h2 id="sc-mod-name" style="margin-top: 0; margin-bottom: 5px;">Название Блока</h2>
+                            <p style="color: var(--sc-text-muted); font-size: 0.8rem; margin-top: 0; margin-bottom: 20px;">Идентификация модуля управления</p>
+                            
+                            <div class="sc-data-list">
+                                <div class="sc-data-row">
+                                    <div class="sc-data-label">CAN Адрес:</div><div class="sc-data-value" id="sc-mod-id">---</div>
+                                </div>
+                                <div class="sc-data-row">
+                                    <div class="sc-data-label">Part №:</div><div class="sc-data-value" id="sc-mod-part" style="font-size: 0.95rem;">---</div>
+                                </div>
+                                <div class="sc-data-row">
+                                    <div class="sc-data-label">Ошибок (DTC):</div><div class="sc-data-value" id="sc-mod-dtc" style="color: var(--sc-rose);">---</div>
+                                </div>
+                            </div>
+                            <button class="sc-btn-action" style="background: var(--sc-panel); border: 1px solid var(--sc-rose); color: var(--sc-rose);" onclick="sc_readErrors()">ПРОЧИТАТЬ ОШИБКИ</button>
+                        </div>
+
+                        <div id="sc-screen-errors" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('module')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад к блоку
+                            </div>
+                            <h2 style="margin-top: 0; margin-bottom: 20px;">Коды ошибок (DTC)</h2>
+                            
+                            <div id="sc-errors-container"></div>
+                        </div>
+
+                        <div id="sc-screen-live" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('home')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад
+                            </div>
+                            <h2 style="margin-top: 0;">Базовые параметры</h2>
+                            
+                            <div class="sc-data-list">
+                                <div class="sc-data-row"><div class="sc-data-label">Обороты ДВС:</div><div class="sc-data-value">840 RPM</div></div>
+                                <div class="sc-data-row"><div class="sc-data-label">Температура ОЖ:</div><div class="sc-data-value">89 °C</div></div>
+                                <div class="sc-data-row"><div class="sc-data-label">Напряжение:</div><div class="sc-data-value">14.2 V</div></div>
+                                <div class="sc-data-row"><div class="sc-data-label">Дроссель:</div><div class="sc-data-value">12 %</div></div>
+                                <div class="sc-data-row"><div class="sc-data-label">УОЗ (Зажигание):</div><div class="sc-data-value">8.5 °</div></div>
+                            </div>
+                        </div>
+
+                        <div id="sc-screen-perecup" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('home')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад
+                            </div>
+                            <h2 style="margin-top: 0;">Анти-Перекуп</h2>
+                            <p style="color: var(--sc-text-muted); font-size: 0.85rem; line-height: 1.4;">Опрос моторного блока, панели и ABS для поиска расхождений в пробеге.</p>
+                            
+                            <button class="sc-btn-action" id="sc-btn-start-perecup" onclick="sc_runPerecup()">НАЧАТЬ СВЕРКУ</button>
+
+                            <div id="sc-perecup-results">
+                                <div class="sc-data-list">
+                                    <div class="sc-data-row"><div class="sc-data-label">Панель (IPC):</div><div class="sc-data-value" style="font-size: 0.95rem;">145 000 км</div></div>
+                                    <div class="sc-data-row"><div class="sc-data-label">Двигатель (PCM):</div><div class="sc-data-value" style="font-size: 0.95rem;">145 012 км</div></div>
+                                    <div class="sc-data-row" style="border-color: var(--sc-rose);"><div class="sc-data-label">Тормоза (ABS):</div><div class="sc-data-value alert" style="font-size: 0.95rem;">289 400 км</div></div>
+                                </div>
+                                <div class="sc-verdict-box" style="background: rgba(244, 63, 94, 0.1); border: 1px solid var(--sc-rose); color: var(--sc-rose);">
+                                    ВНИМАНИЕ! Критическое расхождение. Пробег на панели скручен.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sc-screen-compression" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('special')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад
+                            </div>
+                            <h2 style="margin-top: 0;">Замер компрессии</h2>
+                            <p style="color: var(--sc-text-muted); font-size: 0.8rem;">Анализ относительной компрессии по пульсации коленвала.</p>
+                            
+                            <div class="sc-car-profile" style="margin-top: 20px; border-color: var(--sc-panel-border);">
+                                <div class="sc-bar-container">
+                                    <div class="sc-bar" style="height: 98%;">1</div>
+                                    <div class="sc-bar" style="height: 95%;">2</div>
+                                    <div class="sc-bar low" style="height: 40%;">3</div>
+                                    <div class="sc-bar" style="height: 94%;">4</div>
+                                </div>
+                                <div class="sc-verdict-box" style="background: rgba(244, 63, 94, 0.1); border: 1px solid var(--sc-rose); color: var(--sc-rose); padding: 10px; font-size: 0.75rem;">
+                                    ВНИМАНИЕ! Цилиндр №3 имеет критическое падение компрессии.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sc-screen-oil" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('special')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад
+                            </div>
+                            <h2 style="margin-top: 0;">Ресурс масла</h2>
+                            <p style="color: var(--sc-text-muted); font-size: 0.8rem;">Алгоритм Intelligent Oil-Life Monitor (IOLM)</p>
+                            
+                            <div class="sc-oil-circle">12%</div>
+                            <div class="sc-verdict-box" style="background: rgba(245, 158, 11, 0.1); border: 1px solid var(--sc-amber); color: var(--sc-amber); margin-top: 30px;">
+                                РЕКОМЕНДАЦИЯ: Замена через 1200 км. Масло сильно деградировало из-за работы в пробках.
+                            </div>
+                        </div>
+
+                        <div id="sc-screen-limp" class="sc-container sc-screen">
+                            <div class="sc-nav-back" onclick="sc_navigate('special')">
+                                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Назад
+                            </div>
+                            <h2 style="margin-top: 0;">Доехать до дома</h2>
+                            <p style="color: var(--sc-text-muted); font-size: 0.8rem;">Фоновый авто-сброс аварии. Выберите ошибку для подавления.</p>
+                            
+                            <div class="sc-car-profile" style="margin-top: 20px; text-align: center; border-color: var(--sc-blue);">
+                                <svg style="width: 50px; height: 50px; fill: none; stroke: var(--sc-blue); margin: 0 auto 15px auto; animation: sc-spin 3s linear infinite;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                
+                                <div style="font-weight: bold; margin-bottom: 5px;">Подавление ошибки: <span style="background: var(--sc-rose); padding: 2px 6px; border-radius: 4px; font-family: monospace;">P0299</span></div>
+                                <div style="font-size: 0.75rem; color: var(--sc-text-muted); margin-bottom: 15px;">Блокируем падение машины в "Аварийный режим" (недодув турбины).</div>
+                                
+                                <div style="background: #000; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 0.7rem; color: var(--sc-emerald); text-align: left; border: 1px solid var(--sc-panel-border);">
+                                    > Обнаружена P0299... Удаление... [OK]<br>
+                                    <span style="color: var(--sc-text-muted);">> Ожидание 1000мс...</span><br>
+                                    <span style="color: var(--sc-text-muted);">> Отправка команды 04...</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="faq" class="py-24 bg-slate-900 border-t border-slate-800/60">
-        <div class="mx-auto max-w-3xl px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-black tracking-tight text-white sm:text-4xl">Остались вопросы?</h2>
-                <p class="mt-4 text-slate-400 text-lg">Всё, что вы хотели знать о проекте.</p>
-            </div>
-
-            <div class="space-y-4">
-                <details class="group bg-slate-950 border border-slate-800 rounded-2xl p-6 open:bg-slate-900/50 transition-colors cursor-pointer shadow-lg">
-                    <summary class="text-lg font-bold text-white outline-none flex justify-between items-center">
-                        А подойдёт моей машине?
-                        <span class="text-emerald-500 group-open:rotate-45 transition-transform text-2xl duration-300">+</span>
-                    </summary>
-                    <p class="mt-4 text-slate-400 text-base leading-relaxed border-t border-slate-800 pt-4">
-                        Да! Сканер универсальный. Мы заложили максимально глубокие базы для <strong class="text-white">Ford, VAG (VW, Skoda, Audi), Toyota, Hyundai/Kia и Renault/Lada</strong>. Главное отличие — он читает не только двигатель, но и салонную электронику (ABS, подушки, климат) благодаря считыванию сразу двух CAN-шин (HS-CAN и MS-CAN).
-                    </p>
-                </details>
-
-                <details class="group bg-slate-950 border border-slate-800 rounded-2xl p-6 open:bg-slate-900/50 transition-colors cursor-pointer shadow-lg">
-                    <summary class="text-lg font-bold text-white outline-none flex justify-between items-center">
-                        Как его подключать? Я не программист.
-                        <span class="text-emerald-500 group-open:rotate-45 transition-transform text-2xl duration-300">+</span>
-                    </summary>
-                    <p class="mt-4 text-slate-400 text-base leading-relaxed border-t border-slate-800 pt-4">
-                        Тебе не нужно быть хакером или ставить сложные программы на телефон. <br><br>
-                        1. Вставляешь сканер в разъем под рулем.<br>
-                        2. Подключаешься с телефона к Wi-Fi сети "X_SCANNER57".<br>
-                        3. Открываешь браузер (Chrome/Safari) и всё — панель диагностики перед тобой.
-                    </p>
-                </details>
-
-                <details class="group bg-slate-950 border border-slate-800 rounded-2xl p-6 open:bg-slate-900/50 transition-colors cursor-pointer shadow-lg">
-                    <summary class="text-lg font-bold text-white outline-none flex justify-between items-center">
-                        Нужен ли интернет для расшифровки ошибок?
-                        <span class="text-emerald-500 group-open:rotate-45 transition-transform text-2xl duration-300">+</span>
-                    </summary>
-                    <p class="mt-4 text-slate-400 text-base leading-relaxed border-t border-slate-800 pt-4">
-                        Нет! Вся оффлайн-база ошибок с подробными расшифровками зашита во внутренней памяти (LittleFS) самого устройства. Даже если вы сломались в лесу, сканер найдет и опишет проблему за миллисекунды.
-                    </p>
-                </details>
             </div>
         </div>
     </section>
@@ -454,7 +605,7 @@
                 <div class="text-center max-w-2xl mx-auto mb-8">
                     <h2 class="text-4xl font-black text-white tracking-tight">Оставь заявку на свой сканер</h2>
                     <p class="mt-4 text-base text-slate-400 leading-relaxed">
-                        Первая партия (V1.0) собирается ограниченным тиражом. Заполни форму ниже, чтобы закрепить за собой сканер по сниженной цене для бета-тестеров. 
+                        Первая партия (V1.0) собирается ограниченным тиражом — <strong>всего 5 штук</strong>. Заполни форму ниже, чтобы закрепить за собой сканер по сниженной цене для бета-тестеров. 
                         <br><strong class="text-white mt-2 inline-block">Оплата только когда прибор будет собран и проверен.</strong>
                     </p>
                 </div>
@@ -465,18 +616,18 @@
                     </div>
                     <div>
                         <h4 class="text-amber-400 font-bold text-sm uppercase tracking-wider mb-1">Эксклюзив для первой партии</h4>
-                        <p class="text-slate-300 text-sm">Первые покупатели (версия V1.0) получают <strong class="text-white">пожизненную гарантию</strong> на железо. Если плата выйдет из строя по вине компонентов — замена за мой счет без вопросов.</p>
+                        <p class="text-slate-300 text-sm">Первые 5 покупателей получают <strong class="text-white">пожизненную гарантию</strong> на железо. Если плата выйдет из строя по вине компонентов — замена за мой счет без вопросов.</p>
                     </div>
                 </div>
 
                 <div class="bg-slate-900/80 border border-slate-700/50 rounded-2xl p-6 mb-8 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-[40px] rounded-full"></div>
                     <div class="flex justify-between text-sm font-bold text-slate-300 mb-3 mono uppercase">
-                        <span>Забронировано: <span class="text-emerald-400" id="booked-count">40 шт.</span></span>
-                        <span class="text-rose-400 animate-pulse" id="left-count">Осталось: 10 мест</span>
+                        <span>Забронировано: <span class="text-emerald-400" id="booked-count">0 шт.</span></span>
+                        <span class="text-rose-400 animate-pulse" id="left-count">Осталось: 5 мест</span>
                     </div>
                     <div class="h-3 w-full bg-slate-800 rounded-full overflow-hidden shadow-inner">
-                        <div class="h-full bg-gradient-to-r from-emerald-500 to-rose-500 w-[80%] rounded-full relative transition-all duration-1000 ease-in-out" id="progress-bar-fill">
+                        <div class="h-full bg-gradient-to-r from-emerald-500 to-rose-500 w-[0%] rounded-full relative transition-all duration-1000 ease-in-out" id="progress-bar-fill">
                             <div class="absolute inset-0 bg-white/20 w-full animate-pulse"></div>
                         </div>
                     </div>
@@ -505,10 +656,10 @@
                         </select>
                     </div>
                     
-                    <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 py-5 font-black text-slate-950 hover:from-emerald-400 hover:to-teal-400 transition-all text-center shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer text-base uppercase tracking-widest mt-4">
+                    <button type="submit" id="main-submit-btn" class="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 py-5 font-black text-slate-950 hover:from-emerald-400 hover:to-teal-400 transition-all text-center shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer text-base uppercase tracking-widest mt-4">
                         Занять место и забронировать за 4000 ₽
                     </button>
-                    <p class="text-center text-xs text-slate-500 mono mt-4"><svg class="w-4 h-4 inline text-emerald-500 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Без спама и предоплат. Это честная бронь.</p>
+                    <p class="text-center text-xs text-slate-500 mono mt-4" id="form-spam-note"><svg class="w-4 h-4 inline text-emerald-500 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Без спама и предоплат. Это честная бронь.</p>
                 </form>
 
                 <div id="success-overlay" class="absolute inset-0 bg-slate-900/95 backdrop-blur-xl rounded-3xl flex flex-col items-center justify-center text-center p-8 hidden z-20 border border-emerald-500/50">
@@ -535,10 +686,17 @@
         </div>
     </footer>
 
-        <script>
-        // Инициализация живого счетчика и трекер посещений (напрямую в Telegram)
+    <script>
+        // ==========================================
+        // ЛОГИКА ЖИВОГО СЧЕТЧИКА И БРОНИРОВАНИЯ
+        // ==========================================
+        
+        // Лимит мест для первой партии
+        const TOTAL_SPOTS = 5;
+
+        // Инициализация при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
-            // Отправка уведомления о новом посетителе
+            // Трекер посещений в Telegram
             if (!localStorage.getItem('visited_xscanner')) {
                 localStorage.setItem('visited_xscanner', 'true');
                 const part1 = '8880318600:';
@@ -550,212 +708,94 @@
                 fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        chat_id: chatId, 
-                        text: textMessage,
-                        disable_notification: true
-                    })
+                    body: JSON.stringify({ chat_id: chatId, text: textMessage, disable_notification: true })
                 }).catch(e => console.log('Tracker error'));
             }
-
+            
+            // Запускаем обновление счетчика
             updateLiveCounterUI();
         });
 
-        // База данных симулятора
-        const blocksData = {
-            pcm: { title: 'Двигатель и Коробка', desc: 'Опрос системы произведен мгновенно', errCount: 2, errColor: 'rose', errors: [ { code: 'P0301', status: 'Текущая проблема', text: 'Двигатель троит: Пропуск зажигания в 1-м цилиндре.', sol: 'Нарушено воспламенение смеси. Проверьте систему зажигания, свечи, провода.', nuance: 'Не покупайте сразу новые запчасти! Сначала поменяйте катушки 1 и 2 местами. Если ошибка перейдет во 2-й цилиндр (P0302) — виновата катушка (часто пробивает от сырости). Если останется — дело в свече.' }, { code: 'P0420', status: 'Старая ошибка', text: 'Низкая эффективность катализатора.', sol: 'Срочно вырезать катализатор или менять его на новый.', nuance: 'Не спешите ехать в сервис и удалять соты! Часто ошибка выскакивает просто из-за одной заправки плохим бензином. Сбросьте ошибку нашим сканером, залейте 95-й бензин и покатайтесь пару дней.' } ] },
-            abs: { title: 'Блок Тормозов (ABS)', desc: 'Опрос системы произведен мгновенно', errCount: 1, errColor: 'rose', errors: [ { code: 'P0500', status: 'Текущая проблема', text: 'Горит лампа ABS: Ошибка датчика скорости.', sol: 'Срочно менять блок ABS или ступичный подшипник в сборе.', nuance: 'Не торопись в сервис! На многих авто (особенно Ford и VAG) просто перетирается провод косы в левой передней арке при повороте руля. Снимите колесо и проверьте провода, зачистите изолентой. Цена ремонта — 0 рублей.' } ] },
-            ic: { title: 'Панель Приборов', desc: 'Салонная сеть', errCount: 1, errColor: 'rose', errors: [ { code: 'U1900', status: 'Сбой связи', text: 'Панель глючит, стрелки падают.', sol: 'Замена дорогостоящего блока управления или приборной панели.', nuance: 'Классика жанра! От кочек трескается припой сзади приборной панели. Ничего менять не надо. Сними приборку (2 болта) и отнеси в любой ремонт телефонов, чтобы тебе пропаяли разъем за 300 рублей.' } ] }
-        };
-
-        function selectSimSpecial(type, btnElement) {
-            document.querySelectorAll('.sim-block-btn').forEach(btn => {
-                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'border-amber-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]', 'shadow-[0_0_20px_rgba(245,158,11,0.1)]');
-                btn.classList.add('border-slate-800', 'bg-slate-950/40');
-                btn.querySelector('span.block.mt-1').classList.replace('text-white', 'text-slate-300');
-                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'shadow-[0_0_10px_rgba(245,158,11,0.6)]', 'animate-pulse');
-            });
-
-            btnElement.classList.remove('border-slate-800', 'bg-slate-950/40');
-            btnElement.classList.add('bg-slate-900');
-            btnElement.querySelector('span.block.mt-1').classList.replace('text-slate-300', 'text-white');
-            
-            const displayBox = document.getElementById('sim-display-box');
-
-            if (type === 'mileage') {
-                btnElement.classList.add('border-emerald-500/50', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
-                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'animate-pulse');
-                
-                displayBox.innerHTML = `
-                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div>
-                            <h4 class="text-lg font-black text-white uppercase tracking-wide">Анализ: <span class="text-emerald-400">Сверка пробега</span></h4>
-                            <p class="text-xs text-slate-500 mt-1">Опрос по 2 CAN-шинам завершен</p>
-                        </div>
-                        <span class="text-xs font-bold text-rose-100 bg-rose-600 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(225,29,72,0.5)] animate-pulse">ВНИМАНИЕ!</span>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl flex justify-between items-center">
-                            <span class="text-slate-400 font-bold text-sm sm:text-base">Приборная панель</span>
-                            <span class="text-xl sm:text-2xl font-black text-white mono">85 412 км</span>
-                        </div>
-                        <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl flex justify-between items-center">
-                            <span class="text-slate-400 font-bold text-sm sm:text-base">Блок двигателя</span>
-                            <span class="text-xl sm:text-2xl font-black text-white mono">85 418 км</span>
-                        </div>
-                        <div class="bg-rose-950/40 border border-rose-500/50 p-4 rounded-xl flex justify-between items-center relative overflow-hidden">
-                            <div class="absolute inset-0 bg-rose-500/10 animate-pulse"></div>
-                            <span class="text-rose-400 font-bold relative z-10 text-sm sm:text-base">Блок ABS</span>
-                            <span class="text-xl sm:text-2xl font-black text-rose-400 mono relative z-10">215 890 км</span>
-                        </div>
-                        <div class="mt-6 p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-xl">
-                            <p class="text-emerald-400 text-sm font-bold uppercase mb-1">Вывод системы:</p>
-                            <p class="text-slate-300 text-sm">Пробег был скручен программным путем на приборной панели. Реальный пробег автомобиля составляет более 215 000 км. Покупка не рекомендуется.</p>
-                        </div>
-                    </div>
-                `;
-            } else if (type === 'limp') {
-                btnElement.classList.add('border-blue-500/50', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]');
-                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'animate-pulse');
-                
-                displayBox.innerHTML = `
-                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div>
-                            <h4 class="text-lg font-black text-white uppercase tracking-wide">Режим: <span class="text-blue-400">Доехать до дома</span></h4>
-                            <p class="text-xs text-slate-500 mt-1">Фоновый авто-сброс аварии</p>
-                        </div>
-                        <span class="text-xs font-bold text-blue-100 bg-blue-600 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(37,99,235,0.5)] animate-pulse">АКТИВНО</span>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-8 text-center relative overflow-hidden">
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-500/10 rounded-full blur-[40px] animate-pulse"></div>
-                        
-                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-500/20 border-2 border-blue-500/50 mb-6 relative z-10">
-                            <svg class="w-10 h-10 text-blue-400 animate-[spin_3s_linear_infinite]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        </div>
-                        
-                        <h5 class="text-xl font-bold text-white mb-2 relative z-10">Подавление ошибки: <span class="bg-rose-500 text-white px-2 rounded mono text-lg">P0299</span></h5>
-                        <p class="text-slate-400 text-sm mb-6 relative z-10">Блокируем падение машины в "Аварийный режим" (недодув турбины).</p>
-                        
-                        <div class="bg-[#0f172a] rounded-lg p-3 inline-block border border-slate-700 relative z-10 w-full sm:w-auto">
-                            <span class="text-xs text-slate-500 font-bold mono uppercase">Лог процессора ESP32:</span>
-                            <div class="text-emerald-400 font-mono text-[10px] sm:text-xs mt-2 space-y-1 text-left">
-                                <div>> Ошибка обнаружена. Удаление... [OK]</div>
-                                <div class="opacity-70">> Ожидание 1000мс...</div>
-                                <div class="opacity-40">> Отправка команды очистки 04...</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else if (type === 'compression') {
-                btnElement.classList.add('border-emerald-500/50', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
-                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'animate-pulse');
-                displayBox.innerHTML = `
-                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div>
-                            <h4 class="text-lg font-black text-white uppercase tracking-wide">Виртуальный механик: <span class="text-emerald-400">Замер компрессии</span></h4>
-                            <p class="text-xs text-slate-500 mt-1">Анализ относительной компрессии по пульсации оборотов коленвала через HS-CAN.</p>
-                        </div>
-                        <span class="text-xs font-bold text-rose-100 bg-rose-600 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(225,29,72,0.5)] animate-pulse">ОТКЛОНЕНИЕ</span>
-                    </div>
-                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 text-center">
-                        <div class="flex gap-2 items-end h-40 justify-center mb-6">
-                            <div class="w-16 bg-emerald-500/80 border border-emerald-400 h-[95%] rounded-t flex flex-col justify-end pb-2"><span class="text-white font-bold">1</span></div>
-                            <div class="w-16 bg-emerald-500/80 border border-emerald-400 h-[92%] rounded-t flex flex-col justify-end pb-2"><span class="text-white font-bold">2</span></div>
-                            <div class="w-16 bg-rose-500/80 border border-rose-400 h-[40%] rounded-t flex flex-col justify-end pb-2 animate-pulse"><span class="text-white font-bold">3</span></div>
-                            <div class="w-16 bg-emerald-500/80 border border-emerald-400 h-[94%] rounded-t flex flex-col justify-end pb-2"><span class="text-white font-bold">4</span></div>
-                        </div>
-                        <p class="text-rose-400 font-bold mt-4 uppercase tracking-wider text-sm">Внимание: Цилиндр №3 имеет критическое падение компрессии!</p>
-                    </div>`;
-            } else if (type === 'oil') {
-                btnElement.classList.add('border-amber-500/50', 'shadow-[0_0_20px_rgba(245,158,11,0.1)]');
-                btnElement.querySelector('span.rounded-full').classList.add('shadow-[0_0_10px_rgba(245,158,11,0.6)]', 'animate-pulse');
-                displayBox.innerHTML = `
-                    <div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div>
-                            <h4 class="text-lg font-black text-white uppercase tracking-wide">Сервис: <span class="text-amber-400">Ресурс масла (IOLM)</span></h4>
-                            <p class="text-xs text-slate-500 mt-1">*Доступно для Ford Focus 3+, Kuga 2+, Mondeo 4+ и новее.</p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 text-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-amber-500/5"></div>
-                        <div class="text-7xl font-black text-white mb-2 relative z-10 mono">12%</div>
-                        <p class="text-slate-400 relative z-10 uppercase tracking-widest text-xs font-bold mb-6">Остаток ресурса масла</p>
-                        <div class="inline-block bg-amber-500/10 border border-amber-500/30 px-6 py-4 rounded-xl relative z-10">
-                            <p class="text-amber-400 font-bold text-sm">Рекомендация: Замена через 1200 км. Масло сильно деградировало из-за работы в пробках.</p>
-                        </div>
-                    </div>`;
-            }
-        }
-
-        function selectSimBlock(blockKey, btnElement) {
-            document.querySelectorAll('.sim-block-btn').forEach(btn => {
-                btn.classList.remove('border-emerald-500/50', 'border-blue-500/50', 'border-amber-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]', 'shadow-[0_0_20px_rgba(59,130,246,0.1)]', 'shadow-[0_0_20px_rgba(245,158,11,0.1)]');
-                btn.classList.add('border-slate-800', 'bg-slate-950/40');
-                btn.querySelector('span.block.mt-1').classList.replace('text-white', 'text-slate-300');
-                btn.querySelector('span.rounded-full').classList.remove('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'shadow-[0_0_10px_rgba(16,185,129,0.6)]', 'shadow-[0_0_10px_rgba(59,130,246,0.6)]', 'shadow-[0_0_10px_rgba(245,158,11,0.6)]', 'animate-pulse');
-            });
-
-            btnElement.classList.remove('border-slate-800', 'bg-slate-950/40');
-            btnElement.classList.add('border-emerald-500/50', 'bg-slate-900', 'shadow-[0_0_20px_rgba(16,185,129,0.1)]');
-            btnElement.querySelector('span.block.mt-1').classList.replace('text-slate-300', 'text-white');
-            
-            const dot = btnElement.querySelector('span.rounded-full');
-            dot.classList.add('shadow-[0_0_10px_rgba(244,63,94,0.6)]', 'animate-pulse');
-
-            const data = blocksData[blockKey];
-            const displayBox = document.getElementById('sim-display-box');
-
-            let html = `<div class="border-b border-slate-800 pb-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"><div><h4 class="text-lg font-black text-white uppercase tracking-wide">Диагностика: <span class="text-emerald-400">${data.title}</span></h4><p class="text-xs text-slate-500 mt-1">${data.desc}</p></div><div class="flex items-center gap-3"><span class="text-xs font-bold text-white bg-slate-800 px-3 py-1.5 rounded-full mono">Моя машина</span><span class="text-xs font-bold text-rose-100 bg-rose-500/80 px-3 py-1.5 rounded-full mono shadow-[0_0_15px_rgba(244,63,94,0.3)]">НАЙДЕНО ОШИБОК: ${data.errCount}</span></div></div><div class="space-y-5">`;
-
-            data.errors.forEach(err => {
-                html += `<div class="bg-[#1e293b]/50 border border-slate-700/50 border-l-4 border-l-rose-500 p-5 rounded-2xl"><div class="flex items-center justify-between mb-3"><div class="flex items-center gap-3"><span class="text-xl font-black text-white mono tracking-wide bg-slate-800 px-2 py-0.5 rounded">${err.code}</span><span class="text-xs text-rose-400 font-bold uppercase tracking-wider">${err.status}</span></div></div><p class="text-base font-semibold text-slate-200">${err.text}</p><div class="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800"><span class="text-slate-500 font-bold block uppercase text-[10px] mb-2">Обычная расшифровка:</span><p class="text-slate-300 text-sm">${err.sol}</p></div><div class="bg-emerald-900/10 p-4 rounded-xl border border-emerald-500/30 relative overflow-hidden"><span class="text-emerald-400 font-bold block uppercase text-[10px] mb-2">Совет от X_SCANNER57 (Важно!):</span><p class="text-slate-300 text-sm">${err.nuance}</p></div></div></div>`;
-            });
-            html += '</div>';
-            displayBox.innerHTML = html;
-        }
-
-        // ==========================================
-        // ЛОГИКА ЖИВОГО СЧЕТЧИКА
-        // ==========================================
-        function updateLiveCounterUI() {
-            let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left'));
-            if (isNaN(spotsLeft) || spotsLeft <= 0) {
-                spotsLeft = 10;
-                localStorage.setItem('xscanner_spots_left', spotsLeft);
+        // Функция получения реального количества мест с сервера
+        async function fetchSpots() {
+            try {
+                // Если на бэкенде (logist-x.store) есть API, отдающее остаток мест, оно сработает тут:
+                let response = await fetch('https://logist-x.store/api/xscanner-count');
+                if(response.ok) {
+                    let data = await response.json();
+                    return data.spots_left; 
+                }
+            } catch (e) {
+                // Сервер пока не отдает данные, используем умный фолбэк
             }
             
-            let totalSpots = 50;
-            let booked = totalSpots - spotsLeft;
-            let percent = (booked / totalSpots) * 100;
+            // Фолбэк на локальное хранилище (для тестов, пока бэкенд не готов)
+            let localSpots = parseInt(localStorage.getItem('xscanner_spots_left'));
+            if (isNaN(localSpots) || localSpots > TOTAL_SPOTS) {
+                localSpots = TOTAL_SPOTS;
+                localStorage.setItem('xscanner_spots_left', localSpots);
+            }
+            return localSpots;
+        }
+
+        // Обновление визуала счетчика
+        async function updateLiveCounterUI() {
+            let spotsLeft = await fetchSpots();
+            
+            if (spotsLeft < 0) spotsLeft = 0;
+            let booked = TOTAL_SPOTS - spotsLeft;
+            let percent = (booked / TOTAL_SPOTS) * 100;
 
             document.getElementById('booked-count').innerText = booked + ' шт.';
-            document.getElementById('left-count').innerText = 'Осталось: ' + spotsLeft + ' ' + (spotsLeft === 1 ? 'место' : (spotsLeft >= 2 && spotsLeft <= 4 ? 'места' : 'мест'));
-            document.getElementById('top-banner-count').innerText = '🔥 Внимание: Осталось ' + spotsLeft + ' мест в первой партии! Сборка стартует скоро.';
             
-            setTimeout(() => {
-                document.getElementById('progress-bar-fill').style.width = percent + '%';
+            let btn = document.getElementById('main-submit-btn');
+            let bannerBg = document.getElementById('top-banner-bg');
+            let leftCountTxt = document.getElementById('left-count');
+
+            if (spotsLeft === 0) {
+                // Если места кончились - БЛОКИРУЕМ
+                leftCountTxt.innerText = 'БРОНИРОВАНИЕ ЗАКОНЧЕНО';
+                leftCountTxt.classList.replace('text-rose-400', 'text-slate-500');
+                leftCountTxt.classList.remove('animate-pulse');
+                
+                document.getElementById('top-banner-count').innerText = '🔒 Первая партия полностью распродана. Бронирование закрыто.';
+                document.getElementById('top-banner-count').classList.remove('animate-pulse');
+                bannerBg.classList.replace('bg-rose-600', 'bg-slate-800');
+                bannerBg.classList.replace('shadow-[0_0_15px_rgba(225,29,72,0.5)]', 'shadow-[0_0_15px_rgba(30,41,59,0.5)]');
+
+                btn.disabled = true;
+                btn.innerText = 'МЕСТ НЕТ (ЗАКОНЧЕНО)';
+                btn.classList.replace('from-emerald-500', 'from-slate-700');
+                btn.classList.replace('to-teal-500', 'to-slate-800');
+                btn.classList.replace('text-slate-950', 'text-slate-400');
+                btn.classList.remove('shadow-[0_0_20px_rgba(16,185,129,0.3)]', 'cursor-pointer', 'hover:from-emerald-400', 'hover:to-teal-400');
+                btn.style.cursor = 'not-allowed';
+            } else {
+                // Если места есть
+                let word = (spotsLeft === 1) ? 'место' : ((spotsLeft >= 2 && spotsLeft <= 4) ? 'места' : 'мест');
+                leftCountTxt.innerText = 'Осталось: ' + spotsLeft + ' ' + word;
+                document.getElementById('top-banner-count').innerText = '🔥 Внимание: Осталось ' + spotsLeft + ' ' + word + ' в первой партии! Сборка стартует скоро.';
+            }
+
+            setTimeout(() => { 
+                document.getElementById('progress-bar-fill').style.width = percent + '%'; 
             }, 300);
         }
 
-        // ==========================================
-        // ОТПРАВКА ЗАЯВОК НА ТВОЙ СЕРВЕР LOGIST_X
-        // ==========================================
+        // Отправка формы на сервер LOGIST_X
         async function handleFormSubmit(event) {
             event.preventDefault();
             const form = event.target;
             const inputs = form.querySelectorAll('input, select');
-            
-            // Ссылка на твой собственный сервер
             const serverUrl = 'https://logist-x.store/api/xscanner-order';
-
-            const submitBtn = form.querySelector('button[type="submit"]');
+            const submitBtn = document.getElementById('main-submit-btn');
             const originalBtnText = submitBtn.innerHTML;
             
             submitBtn.innerHTML = 'Отправка...';
             submitBtn.disabled = true;
 
             try {
-                // Никаких Телеграм API напрямую, обращаемся к твоему безопасному серверу
+                // Отправляем данные на твой бэкенд
                 const response = await fetch(serverUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -768,9 +808,9 @@
 
                 if (!response.ok) throw new Error('Server error');
                 
-                // Успешно! Списываем место.
-                let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left')) || 10;
-                if (spotsLeft > 1) {
+                // Успешно! Уменьшаем локальный счетчик для моментальной реакции
+                let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left')) || TOTAL_SPOTS;
+                if (spotsLeft > 0) {
                     spotsLeft--;
                     localStorage.setItem('xscanner_spots_left', spotsLeft);
                     updateLiveCounterUI(); 
@@ -780,13 +820,183 @@
                 form.reset();
             } catch (error) {
                 alert('Ошибка сети или сервер недоступен. Пожалуйста, напишите мне напрямую в Telegram.');
-            } finally {
-                submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
+            } finally {
+                if(parseInt(localStorage.getItem('xscanner_spots_left')) !== 0) {
+                    submitBtn.innerHTML = originalBtnText;
+                }
             }
         }
 
         function closeSuccess() { document.getElementById('success-overlay').classList.add('hidden'); }
+
+        // ==========================================
+        // ЛОГИКА ВСТРОЕННОГО СИМУЛЯТОРА СКАНЕРА
+        // ==========================================
+        
+        let sc_currentModuleId = '';
+
+        // База данных ошибок для симулятора
+        const sc_blocksData = {
+            '7E0': { 
+                title: 'PCM (Двигатель)', count: 2, 
+                errors: [ 
+                    { code: 'P0301', status: 'Текущая проблема', text: 'Двигатель троит: Пропуск зажигания в 1-м цилиндре.', sol: 'Проверьте систему зажигания, свечи, провода.', nuance: 'Не покупайте сразу новые запчасти! Сначала поменяйте катушки 1 и 2 местами. Если ошибка перейдет во 2-й цилиндр (P0302) — виновата катушка. Если останется — дело в свече.' }, 
+                    { code: 'P0420', status: 'Старая ошибка', text: 'Низкая эффективность катализатора.', sol: 'Срочно вырезать катализатор или менять его на новый.', nuance: 'Не спешите ехать в сервис и удалять соты! Часто ошибка выскакивает просто из-за одной заправки плохим бензином. Сбросьте ошибку нашим сканером, залейте 95-й бензин и покатайтесь пару дней.' } 
+                ] 
+            },
+            '760': { 
+                title: 'ABS (Тормоза)', count: 1, 
+                errors: [ 
+                    { code: 'P0500', status: 'Текущая проблема', text: 'Горит лампа ABS: Ошибка датчика скорости.', sol: 'Срочно менять блок ABS или ступичный подшипник в сборе.', nuance: 'На многих авто просто перетирается провод косы в левой передней арке при повороте руля. Снимите колесо и проверьте провода, зачистите изолентой. Цена ремонта — 0 рублей.' } 
+                ] 
+            },
+            '720': { 
+                title: 'IPC (Приборка)', count: 1, 
+                errors: [ 
+                    { code: 'U1900', status: 'Сбой связи', text: 'Панель глючит, стрелки падают.', sol: 'Замена дорогостоящего блока управления или приборной панели.', nuance: 'Классика жанра! От кочек трескается припой сзади приборной панели. Ничего менять не надо. Сними приборку (2 болта) и отнеси в любой ремонт телефонов, чтобы тебе пропаяли разъем за 300 рублей.' } 
+                ] 
+            },
+            '7E1': { title: 'TCM (АКПП)', count: 0, errors: [] }
+        };
+
+        function sc_startScan() {
+            document.getElementById('sc-screen-start').classList.remove('active');
+            document.getElementById('sc-screen-loader').classList.add('active');
+
+            const statusBadge = document.getElementById('sc-conn-status');
+            const statusDot = document.getElementById('sc-conn-dot');
+            const statusText = document.getElementById('sc-conn-text');
+            
+            statusText.innerText = 'ПОИСК АВТО';
+            statusBadge.style.color = 'var(--sc-blue)';
+            statusBadge.style.borderColor = 'var(--sc-blue)';
+            statusBadge.style.background = 'rgba(59, 130, 246, 0.1)';
+            statusDot.style.background = 'var(--sc-blue)';
+            statusDot.style.boxShadow = '0 0 8px var(--sc-blue)';
+            statusDot.classList.add('active');
+
+            setTimeout(() => {
+                document.getElementById('sc-screen-loader').classList.remove('active');
+                document.getElementById('sc-screen-home').classList.add('active');
+                
+                statusText.innerText = 'АВТО НАЙДЕНО';
+                statusBadge.style.color = 'var(--sc-emerald)';
+                statusBadge.style.borderColor = 'var(--sc-emerald)';
+                statusBadge.style.background = 'rgba(16, 185, 129, 0.1)';
+                statusDot.style.background = 'var(--sc-emerald)';
+                statusDot.style.boxShadow = 'none';
+            }, 2500);
+        }
+
+        function sc_navigate(screenId) {
+            document.querySelectorAll('.sc-screen').forEach(el => el.classList.remove('active'));
+            document.getElementById('sc-screen-' + screenId).classList.add('active');
+            
+            if(screenId === 'home') {
+                // Восстанавливаем кнопки перекупа
+                document.getElementById('sc-perecup-results').style.display = 'none';
+                document.getElementById('sc-btn-start-perecup').style.display = 'block';
+                document.getElementById('sc-btn-start-perecup').innerText = 'НАЧАТЬ СВЕРКУ';
+                document.getElementById('sc-btn-start-perecup').style.background = 'var(--sc-emerald)';
+                document.getElementById('sc-btn-start-perecup').style.color = '#000';
+                document.getElementById('sc-btn-start-perecup').style.border = 'none';
+                
+                // Обновляем счетчики на главной
+                let pcmTag = document.querySelector(".sc-module-tag[onclick*=\"'7E0'\"]");
+                if (pcmTag && sc_blocksData['7E0'].count === 0) { pcmTag.style.borderColor = 'var(--sc-emerald)'; pcmTag.style.color = 'var(--sc-emerald)'; }
+                let absTag = document.querySelector(".sc-module-tag[onclick*=\"'760'\"]");
+                if (absTag && sc_blocksData['760'].count === 0) { absTag.style.borderColor = 'var(--sc-emerald)'; absTag.style.color = 'var(--sc-emerald)'; }
+                let ipcTag = document.querySelector(".sc-module-tag[onclick*=\"'720'\"]");
+                if (ipcTag && sc_blocksData['720'].count === 0) { ipcTag.style.borderColor = 'var(--sc-emerald)'; ipcTag.style.color = 'var(--sc-emerald)'; }
+            }
+        }
+
+        function sc_openModule(name, id, part, dtcCount) {
+            sc_currentModuleId = id;
+            document.getElementById('sc-mod-name').innerText = name;
+            document.getElementById('sc-mod-id').innerText = '0x' + id;
+            document.getElementById('sc-mod-part').innerText = part;
+            
+            // Берем актуальное количество из базы (на случай если мы их уже стерли)
+            let actualCount = sc_blocksData[id].count;
+            
+            let dtcEl = document.getElementById('sc-mod-dtc');
+            dtcEl.innerText = actualCount;
+            if(actualCount === 0) {
+                dtcEl.style.color = 'var(--sc-emerald)';
+            } else {
+                dtcEl.style.color = 'var(--sc-rose)';
+            }
+            sc_navigate('module');
+        }
+
+        function sc_readErrors() {
+            const data = sc_blocksData[sc_currentModuleId];
+            const container = document.getElementById('sc-errors-container');
+            
+            if (data.count === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 30px; color: var(--sc-emerald); font-weight: bold; border: 1px dashed var(--sc-emerald); border-radius: 12px; margin-top: 20px;">Ошибок в блоке не найдено. Системы в норме!</div>`;
+            } else {
+                let html = '';
+                data.errors.forEach(err => {
+                    html += `
+                    <div class="sc-err-card">
+                        <div class="sc-err-head">
+                            <span class="sc-err-code">${err.code}</span>
+                            <span class="sc-err-status">${err.status}</span>
+                        </div>
+                        <div class="sc-err-text">${err.text}</div>
+                        <div class="sc-err-advices">
+                            <div class="sc-adv-box sc-adv-std">
+                                <span class="sc-adv-title">Обычный сервис:</span>
+                                ${err.sol}
+                            </div>
+                            <div class="sc-adv-box sc-adv-x">
+                                <span class="sc-adv-title x">Совет от X_SCANNER57:</span>
+                                ${err.nuance}
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                
+                // Кнопка стирания
+                html += `<button id="sc-btn-clear" class="sc-btn-action" style="margin-top: 10px;" onclick="sc_clearErrors()">СТЕРЕТЬ ОШИБКИ</button>`;
+                container.innerHTML = html;
+            }
+            
+            sc_navigate('errors');
+        }
+
+        function sc_clearErrors() {
+            let btn = document.getElementById('sc-btn-clear');
+            btn.innerText = 'УДАЛЕНИЕ...';
+            btn.style.background = 'var(--sc-panel)';
+            btn.style.color = 'var(--sc-emerald)';
+            btn.style.border = '1px solid var(--sc-emerald)';
+            
+            setTimeout(() => {
+                // Очищаем в базе
+                sc_blocksData[sc_currentModuleId].count = 0;
+                sc_blocksData[sc_currentModuleId].errors = [];
+                
+                // Обновляем визуал
+                sc_readErrors(); 
+            }, 1500);
+        }
+
+        function sc_runPerecup() {
+            let btn = document.getElementById('sc-btn-start-perecup');
+            btn.innerText = 'ОПРОС БЛОКОВ...';
+            btn.style.background = 'var(--sc-panel)';
+            btn.style.color = 'var(--sc-blue)';
+            btn.style.border = '1px solid var(--sc-blue)';
+            
+            setTimeout(() => {
+                btn.style.display = 'none';
+                document.getElementById('sc-perecup-results').style.display = 'block';
+            }, 2000);
+        }
     </script>
 
 </body>
