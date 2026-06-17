@@ -180,7 +180,7 @@
 <body class="overflow-x-hidden antialiased selection:bg-emerald-500 selection:text-slate-900 pt-10">
 
     <div class="fixed top-0 left-0 w-full bg-emerald-600 text-white text-center py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest z-[60] shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-colors duration-500" id="top-banner-bg">
-        <span class="animate-pulse inline-block" id="top-banner-count">🔥 Внимание: Осталось 10 мест в первой партии! Сборка стартует скоро.</span>
+        <span class="animate-pulse inline-block" id="top-banner-count">🔥 Внимание: Осталось 5 мест в первой партии! Сборка стартует скоро.</span>
     </div>
 
     <header class="fixed top-10 z-50 w-full border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
@@ -605,7 +605,7 @@
                 <div class="text-center max-w-2xl mx-auto mb-8">
                     <h2 class="text-4xl font-black text-white tracking-tight">Оставь заявку на свой сканер</h2>
                     <p class="mt-4 text-base text-slate-400 leading-relaxed">
-                        Первая партия (V1.0) собирается ограниченным тиражом — <strong>всего 10 штук</strong>. Заполни форму ниже, чтобы закрепить за собой сканер по сниженной цене для бета-тестеров. 
+                        Первая партия (V1.0) собирается ограниченным тиражом — <strong>всего 5 штук</strong>. Заполни форму ниже, чтобы закрепить за собой сканер по сниженной цене для бета-тестеров. 
                         <br><strong class="text-white mt-2 inline-block">Оплата только когда прибор будет собран и проверен.</strong>
                     </p>
                 </div>
@@ -616,7 +616,7 @@
                     </div>
                     <div>
                         <h4 class="text-amber-400 font-bold text-sm uppercase tracking-wider mb-1">Эксклюзив для первой партии</h4>
-                        <p class="text-slate-300 text-sm">Первые 10 покупателей получают <strong class="text-white">пожизненную гарантию</strong> на железо. Если плата выйдет из строя по вине компонентов — замена за мой счет без вопросов.</p>
+                        <p class="text-slate-300 text-sm">Первые 5 покупателей получают <strong class="text-white">пожизненную гарантию</strong> на железо. Если плата выйдет из строя по вине компонентов — замена за мой счет без вопросов.</p>
                     </div>
                 </div>
 
@@ -624,7 +624,7 @@
                     <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-[40px] rounded-full"></div>
                     <div class="flex justify-between text-sm font-bold text-slate-300 mb-3 mono uppercase">
                         <span>Забронировано: <span class="text-emerald-400" id="booked-count">0 шт.</span></span>
-                        <span class="text-rose-400 animate-pulse" id="left-count">Осталось: 10 мест</span>
+                        <span class="text-rose-400 animate-pulse" id="left-count">Осталось: 5 мест</span>
                     </div>
                     <div class="h-3 w-full bg-slate-800 rounded-full overflow-hidden shadow-inner">
                         <div class="h-full bg-gradient-to-r from-emerald-500 to-rose-500 w-[0%] rounded-full relative transition-all duration-1000 ease-in-out" id="progress-bar-fill">
@@ -714,26 +714,39 @@
             
             // Запускаем обновление счетчика
             updateLiveCounterUI();
+            
+            // Запускаем авто-обновление каждые 3 секунды, чтобы ловить заказы других людей
+            setInterval(updateLiveCounterUI, 3000); 
         });
 
         // Функция получения РЕАЛЬНОГО количества мест с сервера
         async function fetchSpots() {
+            // Читаем локальную память на случай сбоя связи с сервером
+            let localSpots = parseInt(localStorage.getItem('xscanner_spots_left'));
+            if (isNaN(localSpots) || localSpots > 5) {
+                localSpots = 5; 
+                localStorage.setItem('xscanner_spots_left', localSpots);
+            }
+
             try {
                 // Добавляем таймстемп, чтобы браузер 100% не кэшировал запрос
                 let response = await fetch('https://logist-x.store/api/xscanner-count?t=' + new Date().getTime());
                 if(response.ok) {
                     let data = await response.json();
+                    // Сервер ответил — верим ему и обновляем локальную память
+                    localStorage.setItem('xscanner_spots_left', data.spots_left);
                     return data.spots_left; 
                 }
             } catch (e) {
-                console.log("Ошибка связи с сервером.");
+                // Если сервер недоступен, молча берем из памяти
             }
-            return 5; // Значение по умолчанию, если сервер вдруг недоступен
+            
+            return parseInt(localStorage.getItem('xscanner_spots_left'));
         }
 
         // Обновление визуала счетчика
         async function updateLiveCounterUI() {
-            let spotsLeft = await fetchSpots(); // Теперь цифра берется СТРОГО с сервера
+            let spotsLeft = await fetchSpots(); 
             
             if (spotsLeft < 0) spotsLeft = 0;
             let booked = TOTAL_SPOTS - spotsLeft;
@@ -746,6 +759,7 @@
             let leftCountTxt = document.getElementById('left-count');
 
             if (spotsLeft === 0) {
+                // Если места кончились - БЛОКИРУЕМ
                 leftCountTxt.innerText = 'БРОНИРОВАНИЕ ЗАКОНЧЕНО';
                 leftCountTxt.classList.replace('text-rose-400', 'text-slate-500');
                 leftCountTxt.classList.remove('animate-pulse');
@@ -763,14 +777,19 @@
                 btn.classList.remove('shadow-[0_0_20px_rgba(16,185,129,0.3)]', 'cursor-pointer', 'hover:from-emerald-400', 'hover:to-teal-400');
                 btn.style.cursor = 'not-allowed';
             } else {
+                // Если места есть
                 let word = (spotsLeft === 1) ? 'место' : ((spotsLeft >= 2 && spotsLeft <= 4) ? 'места' : 'мест');
                 leftCountTxt.innerText = 'Осталось: ' + spotsLeft + ' ' + word;
                 document.getElementById('top-banner-count').innerText = '🔥 Внимание: Осталось ' + spotsLeft + ' ' + word + ' в первой партии! Сборка стартует скоро.';
             }
 
-            setTimeout(() => { 
-                document.getElementById('progress-bar-fill').style.width = percent + '%'; 
-            }, 300);
+            // Обновляем ползунок только если он действительно изменился (чтобы не дергалась анимация)
+            let currentWidth = document.getElementById('progress-bar-fill').style.width;
+            if(currentWidth !== percent + '%') {
+                setTimeout(() => { 
+                    document.getElementById('progress-bar-fill').style.width = percent + '%'; 
+                }, 100);
+            }
         }
 
         // Отправка формы на сервер LOGIST_X
@@ -786,6 +805,7 @@
             submitBtn.disabled = true;
 
             try {
+                // Отправляем данные на бэкенд
                 const response = await fetch(serverUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -798,7 +818,14 @@
 
                 if (!response.ok) throw new Error('Server error');
                 
-                // Успешно! Вызываем функцию обновления, она сама спросит у сервера свежую цифру
+                // Сразу принудительно уменьшаем локальный счетчик для моментальной реакции пользователя
+                let spotsLeft = parseInt(localStorage.getItem('xscanner_spots_left')) || 5;
+                if (spotsLeft > 0) {
+                    spotsLeft--;
+                    localStorage.setItem('xscanner_spots_left', spotsLeft);
+                }
+
+                // Вызываем функцию обновления (она подхватит локальную память и сверится с сервером)
                 updateLiveCounterUI(); 
 
                 document.getElementById('success-overlay').classList.remove('hidden');
@@ -807,7 +834,6 @@
                 alert('Ошибка сети или сервер недоступен. Пожалуйста, напишите мне напрямую в Telegram.');
                 submitBtn.disabled = false;
             } finally {
-                // Если места еще остались, возвращаем текст кнопке
                 setTimeout(async () => {
                     let spots = await fetchSpots();
                     if(spots !== 0) {
@@ -884,7 +910,6 @@
             document.getElementById('sc-screen-' + screenId).classList.add('active');
             
             if(screenId === 'home') {
-                // Восстанавливаем кнопки перекупа
                 document.getElementById('sc-perecup-results').style.display = 'none';
                 document.getElementById('sc-btn-start-perecup').style.display = 'block';
                 document.getElementById('sc-btn-start-perecup').innerText = 'НАЧАТЬ СВЕРКУ';
@@ -892,7 +917,6 @@
                 document.getElementById('sc-btn-start-perecup').style.color = '#000';
                 document.getElementById('sc-btn-start-perecup').style.border = 'none';
                 
-                // Обновляем счетчики на главной
                 let pcmTag = document.querySelector(".sc-module-tag[onclick*=\"'7E0'\"]");
                 if (pcmTag && sc_blocksData['7E0'].count === 0) { pcmTag.style.borderColor = 'var(--sc-emerald)'; pcmTag.style.color = 'var(--sc-emerald)'; }
                 let absTag = document.querySelector(".sc-module-tag[onclick*=\"'760'\"]");
@@ -908,7 +932,6 @@
             document.getElementById('sc-mod-id').innerText = '0x' + id;
             document.getElementById('sc-mod-part').innerText = part;
             
-            // Берем актуальное количество из базы (на случай если мы их уже стерли)
             let actualCount = sc_blocksData[id].count;
             
             let dtcEl = document.getElementById('sc-mod-dtc');
@@ -950,7 +973,6 @@
                     </div>`;
                 });
                 
-                // Кнопка стирания
                 html += `<button id="sc-btn-clear" class="sc-btn-action" style="margin-top: 10px;" onclick="sc_clearErrors()">СТЕРЕТЬ ОШИБКИ</button>`;
                 container.innerHTML = html;
             }
@@ -966,11 +988,8 @@
             btn.style.border = '1px solid var(--sc-emerald)';
             
             setTimeout(() => {
-                // Очищаем в базе
                 sc_blocksData[sc_currentModuleId].count = 0;
                 sc_blocksData[sc_currentModuleId].errors = [];
-                
-                // Обновляем визуал
                 sc_readErrors(); 
             }, 1500);
         }
