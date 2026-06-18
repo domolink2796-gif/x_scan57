@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X_SCANNER57 — Твой Личный Автодиагност</title>
     
+    <meta name="description" content="Профессиональный беспроводной автосканер X_SCANNER57 на чипе ESP32. Глубокая диагностика Ford, VAG, Toyota, Hyundai, Renault. Эксклюзивные режимы: фоновый сброс ошибок (Limp Mode) и поиск скрученного пробега (Анти-Перекуп). Работает без интернета и сторонних программ.">
+    <meta name="keywords" content="автодиагностика по wifi, беспроводной obd2 сканер, анти-перекуп сканер, проверка пробега авто obd2, фоновый сброс ошибок, режим limp mode, esp32 s3 mini автосканер, hs-can ms-can сканер, аналог elm327 wifi, диагностика ford vag toyota hyundai renault, чтение кузовных блоков, сброс аварийного режима эбу, проверка скрученного пробега, автосканер без интернета, ota обновления сканера, купить профессиональный автосканер">
+    
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://domolink2796-gif.github.io/x_scan57/">
+    <meta property="og:url" content="https://x-scan57.ru/">
     <meta property="og:title" content="X_SCANNER57 — Твой Личный Автодиагност">
     <meta property="og:description" content="Полноценный сервер в OBD-разъеме. Фоновый сброс аварий (Limp Mode), проверка реального пробега и честная диагностика. Без интернета и подписок.">
     <meta property="og:image" content="https://domolink2796-gif.github.io/x_scan57/preview.png">
@@ -176,7 +179,19 @@
         @keyframes sc-fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes sc-spin { 100% { transform: rotate(360deg); } }
     </style>
-</head>
+
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109970042', 'ym');
+
+        ym(109970042, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/109970042" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    </head>
 <body class="overflow-x-hidden antialiased selection:bg-emerald-500 selection:text-slate-900 pt-10">
 
     <div class="fixed top-0 left-0 w-full bg-emerald-600 text-white text-center py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest z-[60] shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-colors duration-500" id="top-banner-bg">
@@ -289,7 +304,7 @@
                         <ul class="space-y-5">
                             <li class="flex items-start gap-4">
                                 <div class="bg-rose-500/20 p-3 rounded-xl text-rose-400 border border-rose-500/30">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    <svg class="w-6 h-6" aria-label="Диагностика двигателя HS-CAN" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                 </div>
                                 <div>
                                     <p class="text-white font-bold text-lg">Основа авто (HS-CAN)</p>
@@ -298,7 +313,7 @@
                             </li>
                             <li class="flex items-start gap-4">
                                 <div class="bg-blue-500/20 p-3 rounded-xl text-blue-400 border border-blue-500/30">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                                    <svg class="w-6 h-6" aria-label="Чтение кузовных блоков MS-CAN" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                                 </div>
                                 <div>
                                     <p class="text-white font-bold text-lg">Электроника салона (MS-CAN)</p>
@@ -328,28 +343,28 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl hover:bg-slate-800/80 transition-colors">
                     <div class="h-12 w-12 bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400 border border-indigo-500/30 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                        <svg class="w-6 h-6" aria-label="Процессор ESP32-S3 Mini" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
                     </div>
                     <h4 class="text-xl font-bold text-white mb-2">Процессор ESP32</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">Мощный чип выступает как локальный веб-сервер. Раздает Wi-Fi, хранит в памяти HTML/JS интерфейс и мгновенно отдает данные по WebSockets.</p>
                 </div>
                 <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl hover:bg-slate-800/80 transition-colors">
                     <div class="h-12 w-12 bg-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400 border border-emerald-500/30 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        <svg class="w-6 h-6" aria-label="Двухканальная CAN-шина Twin TWAI" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                     </div>
                     <h4 class="text-xl font-bold text-white mb-2">Dual-CAN Архитектура</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">Читаем сразу две шины аппаратно. Отдельный трансивер на мотор, и отдельная связка с цифровым мультиплексором для кузовных блоков.</p>
                 </div>
                 <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl hover:bg-slate-800/80 transition-colors">
                     <div class="h-12 w-12 bg-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 border border-amber-500/30 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <svg class="w-6 h-6" aria-label="Импульсный DC-DC блок питания" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </div>
                     <h4 class="text-xl font-bold text-white mb-2">Холодное питание</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">Автомобильная сеть прыгает до 14.4V. Мы используем импульсный DC-DC преобразователь. Сканер не плавится и не греется при долгой работе.</p>
                 </div>
                 <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl hover:bg-slate-800/80 transition-colors">
                     <div class="h-12 w-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 border border-blue-500/30 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        <svg class="w-6 h-6" aria-label="Беспроводные OTA обновления по воздуху" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                     </div>
                     <h4 class="text-xl font-bold text-white mb-2">OTA Dual-Bank Обновления</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">Безопасное обновление прошивки по Wi-Fi. Если при скачивании оборвется интернет, прибор загрузится из резервного сектора. Никаких «кирпичей».</p>
@@ -384,7 +399,7 @@
 
                         <div id="sc-screen-start" class="sc-container sc-screen active">
                             <div class="sc-center-screen">
-                                <svg class="sc-obd-icon" viewBox="0 0 24 24"><path d="M19 4H5C3.89 4 3 4.9 3 6v12c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V6C21 4.9 20.11 4 19 4zM6 14H5v-2h1v2zm0-4H5V8h1v2zm3 4H8v-2h1v2zm0-4H8V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2z"/></svg>
+                                <svg class="sc-obd-icon" aria-label="OBD-2 автосканер подключение" viewBox="0 0 24 24"><path d="M19 4H5C3.89 4 3 4.9 3 6v12c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V6C21 4.9 20.11 4 19 4zM6 14H5v-2h1v2zm0-4H5V8h1v2zm3 4H8v-2h1v2zm0-4H8V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2zm3 4h-1v-2h1v2zm0-4h-1V8h1v2z"/></svg>
                                 <h2 style="margin: 0 0 10px 0;">Устройство готово</h2>
                                 <p style="color: var(--sc-text-muted); font-size: 0.9rem; line-height: 1.5; margin: 0 0 30px 0;">Вставьте сканер в разъем OBD-II и включите зажигание перед подключением.</p>
                                 <button class="sc-btn-action" onclick="sc_startScan()">ПОДКЛЮЧИТЬ</button>
@@ -425,15 +440,15 @@
                                         <div class="sc-card-title" style="font-size: 1rem;">Спец. функции</div>
                                         <div class="sc-card-desc">Компрессия, Масло, Limp Mode</div>
                                     </div>
-                                    <svg class="sc-card-icon sc-icon-blue" style="margin: 0;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .43-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.49-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                                    <svg class="sc-card-icon sc-icon-blue" aria-label="Специальные функции сброса ошибок Limp Mode" style="margin: 0;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .43-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.49-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                                 </div>
                                 <div class="sc-card" onclick="sc_navigate('live')">
-                                    <svg class="sc-card-icon sc-icon-amber" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                                    <svg class="sc-card-icon sc-icon-amber" aria-label="Параметры реального времени двигателя" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
                                     <div class="sc-card-title">Параметры</div>
                                     <div class="sc-card-desc">Данные в реальном времени</div>
                                 </div>
                                 <div class="sc-card" onclick="sc_navigate('perecup')">
-                                    <svg class="sc-card-icon sc-icon-emerald" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                                    <svg class="sc-card-icon sc-icon-emerald" aria-label="Функция сканера Анти-Перекуп для сверки пробега авто" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                                     <div class="sc-card-title">Анти-Перекуп</div>
                                     <div class="sc-card-desc">Сверка пробега по блокам</div>
                                 </div>
@@ -579,7 +594,7 @@
                             <p style="color: var(--sc-text-muted); font-size: 0.8rem;">Фоновый авто-сброс аварии. Выберите ошибку для подавления.</p>
                             
                             <div class="sc-car-profile" style="margin-top: 20px; text-align: center; border-color: var(--sc-blue);">
-                                <svg style="width: 50px; height: 50px; fill: none; stroke: var(--sc-blue); margin: 0 auto 15px auto; animation: sc-spin 3s linear infinite;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <svg style="width: 50px; height: 50px; fill: none; stroke: var(--sc-blue); margin: 0 auto 15px auto; animation: sc-spin 3s linear infinite;" aria-label="Циклический фоновый сброс ошибок Limp Mode" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                 
                                 <div style="font-weight: bold; margin-bottom: 5px;">Подавление ошибки: <span style="background: var(--sc-rose); padding: 2px 6px; border-radius: 4px; font-family: monospace;">P0299</span></div>
                                 <div style="font-size: 0.75rem; color: var(--sc-text-muted); margin-bottom: 15px;">Блокируем падение машины в "Аварийный режим" (недодув турбины).</div>
@@ -619,7 +634,7 @@
 
                 <div class="shrink-0 w-full md:w-auto">
                     <a href="https://t.me/x_scanner57" target="_blank" class="flex items-center justify-center gap-3 w-full md:w-auto rounded-2xl bg-[#2AABEE] px-8 py-5 font-bold text-white hover:bg-[#229ED9] transition-all shadow-[0_0_25px_rgba(42,171,238,0.4)] transform hover:-translate-y-1 text-base uppercase tracking-wider">
-                        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.31-.35-.11l-6.4 4.02-2.76-.86c-.6-.188-.614-.6.126-.89l10.814-4.17c.5-.19.95.12.82.918z"/></svg>
+                        <svg class="w-7 h-7 fill-current" aria-label="Телеграм канал X_SCANNER57" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.31-.35-.11l-6.4 4.02-2.76-.86c-.6-.188-.614-.6.126-.89l10.814-4.17c.5-.19.95.12.82.918z"/></svg>
                         Перейти в Канал
                     </a>
                 </div>
