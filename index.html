@@ -766,15 +766,31 @@
 
         // Инициализация при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
-            // Трекер посещений в Telegram
-            if (!localStorage.getItem('visited_xscanner')) {
-                localStorage.setItem('visited_xscanner', 'true');
-                const part1 = '8880318600:';
-                const part2 = 'AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
-                const botToken = part1 + part2;
-                const chatId = '6846149935'; 
-                const textMessage = '👀 Новый уникальный посетитель зашел на сайт X_SCANNER57!';
-                
+            // Трекер посещений в Telegram (ОБНОВЛЕННЫЙ)
+            const botToken = '8880318600:AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
+            const chatId = '6846149935'; 
+            
+            let ref = document.referrer;
+            let refSource = 'Прямой заход или мессенджер';
+            if (ref) {
+                try {
+                    let url = new URL(ref);
+                    refSource = url.hostname;
+                } catch(e) {
+                    refSource = ref;
+                }
+            }
+
+            if (!localStorage.getItem('visited_xscanner_v2')) {
+                localStorage.setItem('visited_xscanner_v2', 'true');
+                const textMessage = `👀 Новый посетитель зашел на сайт X_SCANNER57!\nИсточник: ${refSource}`;
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: textMessage, disable_notification: true })
+                }).catch(e => console.log('Tracker error'));
+            } else {
+                const textMessage = `🔁 Вернувшийся посетитель на сайте X_SCANNER57!\nИсточник: ${refSource}`;
                 fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
