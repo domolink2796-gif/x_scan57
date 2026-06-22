@@ -375,9 +375,6 @@
         </div>
     </section>
 
-    <!-- ========================================= -->
-    <!-- НОВЫЙ БЛОК: ИНФОГРАФИКА                   -->
-    <!-- ========================================= -->
     <section class="py-16 bg-[#060a13] border-t border-slate-800/50 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none"></div>
         <div class="mx-auto max-w-4xl px-6 relative z-10 text-center">
@@ -386,17 +383,13 @@
             </div>
             
             <div class="glass-panel p-2 md:p-4 rounded-[2rem] border border-slate-700/50 shadow-2xl shadow-emerald-500/10 relative">
-                <!-- Декоративные элементы по углам -->
                 <div class="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-emerald-500/30 rounded-tl-[2rem] pointer-events-none"></div>
                 <div class="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-emerald-500/30 rounded-br-[2rem] pointer-events-none"></div>
                 
-                <!-- Сама картинка -->
                 <img src="1000095627_2.png" alt="Инфографика X_SCANNER57: Профессиональная диагностика" class="w-full h-auto rounded-[1.5rem]" loading="lazy">
             </div>
         </div>
     </section>
-    <!-- ========================================= -->
-
     <section id="simulation" class="py-24 bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800/60 relative">
         <div class="mx-auto max-w-7xl px-6">
             <div class="text-center max-w-3xl mx-auto mb-16">
@@ -766,10 +759,8 @@
 
         // Инициализация при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
-            // Трекер посещений в Telegram (ОБНОВЛЕННЫЙ)
-            const botToken = '8880318600:AAFBLHH1ki7WeDglTpCbSpg69ulSi0aWRKQ';
-            const chatId = '6846149935'; 
             
+            // НОВЫЙ БЕЗОПАСНЫЙ ТРЕКЕР ПОСЕТИТЕЛЕЙ (ЧЕРЕЗ СЕРВЕР)
             let ref = document.referrer;
             let refSource = 'Прямой заход или мессенджер';
             if (ref) {
@@ -781,22 +772,22 @@
                 }
             }
 
+            let isNewVisitor = false;
             if (!localStorage.getItem('visited_xscanner_v2')) {
                 localStorage.setItem('visited_xscanner_v2', 'true');
-                const textMessage = `👀 Новый посетитель зашел на сайт X_SCANNER57!\nИсточник: ${refSource}`;
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: chatId, text: textMessage, disable_notification: true })
-                }).catch(e => console.log('Tracker error'));
-            } else {
-                const textMessage = `🔁 Вернувшийся посетитель на сайте X_SCANNER57!\nИсточник: ${refSource}`;
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: chatId, text: textMessage, disable_notification: true })
-                }).catch(e => console.log('Tracker error'));
+                isNewVisitor = true;
             }
+
+            // Отправляем запрос на наш серверный API, а не напрямую в Telegram
+            fetch('https://logist-x.store/api/xscanner-track', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    isNew: isNewVisitor, 
+                    referrer: refSource 
+                })
+            }).catch(e => console.log('Tracker sent'));
+
             
             // Запускаем обновление счетчика
             updateLiveCounterUI();
